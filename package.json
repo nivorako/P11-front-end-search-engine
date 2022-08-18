@@ -1,0 +1,19 @@
+{
+  "name": "p11-front-end-search-engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "recipes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nivorako/P11-front-end-search-engine.git"
+  },
+  "author": "niv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nivorako/P11-front-end-search-engine/issues"
+  },
+  "homepage": "https://github.com/nivorako/P11-front-end-search-engine#readme"
+}
