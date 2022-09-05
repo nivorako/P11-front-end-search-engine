@@ -16,18 +16,26 @@
     <link rel="shortcut icon" href="#" />
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="./style/reset.css"/>
+    <script src="https://kit.fontawesome.com/4ed0ec6e4e.js" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="./style/reset.css"/> -->
     <link rel="stylesheet" href="./style/style.css"/>
     <title>Les Petits Plats</title>
 </head>
 <body>
-    <header class="head">
+    <header class="head container text-center mt-3">
         <img class="head__img" src="./assets/images/logoChef.png"/>
     </header>
-    <main class="">
-        <section class="search"></section>
-        <section class="tag"></section>
-        <section class="cards"></section>
+    <main class="container-fluid" id="main">
+        <section class="container">
+            <form class="row search mt-5"> 
+                <input class="search__input" placeholder="rechercher une recette" type="text">
+                <div class="search__btn">
+                    <img src="./assets/images/search.svg" class="search__img"/>
+                </div>
+            </form>
+        </section>
+        <section class="tag">b</section>
+        <section class="cards">c</section>
     </main>
 </body>
 <!-- JavaScript Bundle with Popper -->

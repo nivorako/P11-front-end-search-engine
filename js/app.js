@@ -1,6 +1,6 @@
 class App{
     constructor(){
-        this.wrapper = document.getElementById('body')
+        this.wrapper = document.getElementById('main')
     }
 
     main(){
@@ -12,4 +12,4 @@ class App{
 }
 
 const app = new App();
-app.main();
+// app.main();
