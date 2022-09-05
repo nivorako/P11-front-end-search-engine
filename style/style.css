@@ -57,13 +57,25 @@ li{
 .tag__ustensils,
 .tag__ingredients,
 .tag__tools{
+    width: auto;
     height: 50px;
     margin-right: 10px;
     border-radius: var(--br);
     opacity: .8;
 }
 
+.tag__input{
+    border-radius: var(--br);
+}
+
 .tag__dropdown-menu{
-    border: black thin solid;
-    
+    border: black thin solid;   
+}
+
+.tag__row::after{
+    content: none;
+}
+
+.hidden{
+    display: none;
 }
