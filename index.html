@@ -27,41 +27,18 @@
     </header>
     <main class="container-fluid" id="main">
         <section class="container">
-            <form class="row search mt-5"> 
-                <input class="search__input" placeholder="rechercher une recette" type="text">
-                <div class="search__btn">
-                    <img src="./assets/images/search.svg" class="search__img"/>
-                </div>
-            </form>
+            <form class="row search mt-5"></form>
         </section>
         <section class="container tag mt-5 ">
-            <div class="row">
-                <div class="tag__ingredients col-2 bg-primary dropdown">
-                    <div 
-                        class="tag__row row d-flex align-items-center dropdown-toggle"  
-                        data-bs-toggle="dropdown"
-                        type="button"
-                    >
-                        <h2 class="tag__title text-center col-9">ingrédients</h2>
-                        <input class="tag__input hidden bg-primary" type="text" placeholder="rechercher un ungrédient">
-                        <i class="fas fa-chevron-up col-3"></i>
-                    </div>
-                    <ul class="tag__dropdown-menu dropdown-menu">
-                       
-                    </ul>
+            <div class="tag__items row mt-5 ">
+                <div class="tag__item col-2 text-center bg-primary">
+                    <p>pruneaux</p>  
                 </div>
-                <div class="tag__tools col-2 bg-success">
-                     <div class="tag__row row d-flex align-items-center">
-                        <h2 class="tag__title text-center col-9">appareils</h2>
-                        <i class="fas fa-chevron-up col-3"></i>
-                     </div>                   
-                </div>
-                <div class="tag__ustensils col-2 bg-danger">
-                    <div class="tag__row row d-flex align-items-center">
-                        <h2 class="tag__title text-center col-9">ustensils</h2>
-                        <i class="fas fa-chevron-up col-3"></i>
-                    </div>                   
-                </div>
+            </div>
+            <div class="tag__sorter row mt-5">
+                <div class="tag__ingredients col-2 bg-primary dropdown"></div>
+                <div class="tag__tools col-2 bg-success dropdown"></div>
+                <div class="tag__ustensils col-2 bg-danger dropdown"></div>
             </div> 
         </section>
         <section class="cards container"></section>

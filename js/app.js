@@ -1,14 +1,8 @@
-class Api {
-    constructor(url){
-        this._url = url;
-    }
-    async get(){
-        return fetch(this._url)
-            .then(res => res.json())
-            .then(res => res.recipes)
-            .catch(err => console.log('an error occurs', err))
-    }
-}
+import Api from './api/api.js';
+import Ingredient from './templates/ingredient.js';
+import Ustensils from './templates/ustensils.js';
+import Tools from './templates/tools.js';
+import Search from './templates/search.js';
 
 class App{
     constructor(){
@@ -18,8 +12,19 @@ class App{
 
     async main(){
 
-       const recipes = await this.recipesApi.get()
-       console.log("recipes: ", recipes)
+       const recipes = await this.recipesApi.get();
+
+       const search = new Search();
+       search.render();
+
+       const ingredient = new Ingredient();
+       ingredient.render();
+
+       const ustensil = new Ustensils();
+       ustensil.render();
+
+       const tool = new Tools();
+       tool.render();
     }
 }
 

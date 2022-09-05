@@ -76,6 +76,10 @@ li{
     content: none;
 }
 
+.tag__item{
+    height: 100%;
+}
+
 .hidden{
     display: none;
 }
