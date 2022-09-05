@@ -5,7 +5,7 @@ class Api {
     async get(){
         return fetch(this._url)
             .then(res => res.json())
-            .then(res => res.data)
+            .then(res => res.recipes)
             .catch(err => console.log('an error occurs', err))
     }
 }
@@ -13,7 +13,7 @@ class Api {
 class App{
     constructor(){
         this.wrapper = document.getElementById('main');
-        this.recipesApi = new Api("/recipes.js")
+        this.recipesApi = new Api("/data/recipes.json")
     }
 
     async main(){
