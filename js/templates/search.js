@@ -7,7 +7,7 @@ export default class Search{
         const search = `
             <input class="search__input" placeholder="rechercher une recette" type="text">
             <div class="search__btn">
-                <img src="./assets/images/search.svg" class="search__img"/>
+                <i class="fa fa-search"></i>
             </div>
         `
 
@@ -16,3 +16,5 @@ export default class Search{
         return this.search;
     }
 }
+
+// <img src="./assets/images/search.svg" class="search__img"/>
