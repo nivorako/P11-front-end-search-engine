@@ -9,7 +9,7 @@ class App {
     constructor() {
         this.wrapper = document.getElementById('main');
         this.cardWrapper = document.querySelector('.cards');
-        this.recipesApi = new Api("/data/recipes.json");
+        this.recipesApi = new Api("./data/recipes.json");
     }
 
     async main() {
