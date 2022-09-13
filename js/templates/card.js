@@ -4,7 +4,6 @@ export default class Card{
         this.recipe = recipe
         this.cardList = (ingredients) => {
             let cardListHTML = ""
-            console.log("ingredient: ", ingredients)
             ingredients.forEach(elt => {
                 cardListHTML += `
                 <li class="card__listItem">

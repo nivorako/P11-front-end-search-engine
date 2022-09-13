@@ -18,6 +18,7 @@ class App {
         console.log('RECIPES: ', recipes)
         const search = new Search();
         search.render();
+        search.onSearch(recipes);
 
         const ingredient = new Ingredient();
         ingredient.render();
@@ -34,6 +35,7 @@ class App {
             
             this.cardWrapper.appendChild(template)
         })
+
 
     }
 }
