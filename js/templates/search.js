@@ -3,6 +3,7 @@ import Card from "./card.js"
 export default class Search{
     constructor () {
         this.search = document.querySelector('.search')
+        //this.search = document.createElement('div')
     }
 
     onSearch(recipes){
@@ -10,15 +11,53 @@ export default class Search{
         const cards = document.querySelector('.cards')
         searchInput.addEventListener('keyup', (e) => {
             let inputValue = e.target.value
-            if(inputValue.length >= 4){
+            if(inputValue.length > 3){
                 cards.innerHTML = ""
-                let list = []
+                let selectedList = []
+
                 recipes.forEach(recipe => {
-                   
+                    
+                    const length = Object.entries(recipe).length
+                    // on remplit list
+                    for(let i= 0; i< length; i++) {
+                        if(Object.keys(recipe)[i] === "appliance"){
+                            
+                            if(Object.values(recipe)[i].toLowerCase().includes(inputValue.toLowerCase())){
+                                selectedList.push(recipe)
+                                
+                            }
+                        }
+                        else if(Object.keys(recipe)[i] === "ustensils"){
+                           
+                            const ustensilsLength = recipe.ustensils.length
+                            for(let j = 0; j < ustensilsLength; j++){
+                                if(recipe.ustensils[j].toLowerCase().includes(inputValue.toLowerCase())){
+                                    selectedList.push(recipe)
+                                }
+                            }
+                            if(Object.values(recipe)[i].includes(inputValue)){
+                                
+                            }
+                        }
+                        else if(Object.keys(recipe)[i] === "ingredients"){
+                            const ingedientsLength = recipe.ingredients.length
+                            for(let k = 0; k < ingedientsLength; k++){
+                                if(recipe.ingredients[k].ingredient.toLowerCase().includes(inputValue.toLowerCase()))
+                                selectedList.push(recipe)
+                            }
+                        }
+                    }
+                })
+                
+                selectedList.forEach(selected => {
+                    const newCard = new Card(selected)
+                    const newCardTemplate = newCard.render()
+                    
+                    cards.appendChild(newCardTemplate)
                 })
 
             }
-            if(inputValue.length < 4){
+            if(inputValue.length === 3){
                 recipes.forEach(recipe => {
                     const card = new Card(recipe)
                     const template = card.render()
@@ -38,6 +77,7 @@ export default class Search{
         `
 
         this.search.innerHTML = search;
+        
         return this.search;
     }
 }
