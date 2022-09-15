@@ -3,14 +3,15 @@
 export default class Appliance{
     constructor(){
         this.toolsWrapper = document.querySelector('.tag__appliance');
-        this.tagInput = document.querySelector('.tag__input');
+        //this.tagInput = document.querySelector('.tag__input');
     
-        // this.applianceOnClick = () => {
-        //     this.toolsWrapper.addEventListener('click', () => {
-            
-        //     this.tagInput.classList.remove('hidden')    
-        //     })
-        // }
+        this.applianceOnClick = () => {
+           
+            // this.toolsWrapper.addEventListener('click', () => {
+            // console.log('tagInput: ', this.tagInput)
+            // this.tagInput.classList.remove('hidden')    
+            // })
+        }
     }
 
     render(){
@@ -22,7 +23,7 @@ export default class Appliance{
                 
             >
                 <h2 class="tag__title text-center col-9">appliance</h2>
-                <input class="tag__input hidden bg-primary" type="text" placeholder="rechercher un appareil"></input>
+                <input class="tag__input hidden bg-primary" id="appliance" type="text" placeholder="rechercher un appareil"></input>
                 <i class="fas fa-chevron-up col-3"></i>
             </div>
             <ul class="tag__dropdown-menu dropdown-menu">
