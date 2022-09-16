@@ -53,37 +53,39 @@ li{
     width: 15px;
     height: 15px;
 }
-.tag__row{
-    height: 100%;
-}
-.tag__title{
-    font-size: var(--fmed);
-}
+
+
 
 .tag__ustensils,
 .tag__ingredients,
 .tag__appliance{
-    width: auto;
+    position: relative;
+    color: white;
     height: 50px;
     margin-right: 10px;
     border-radius: var(--br);
     opacity: .8;
 }
 
+.tag__title{
+    font-size: var(--fmed);
+}
+
 .tag__input{
     border-radius: var(--br);
 }
 
-.tag__dropdown-menu{
-    border: black thin solid;   
+.tag__btn{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
 }
 
-.tag__row::after{
-    content: none;
-}
-
-.tag__item{
-    height: 100%;
+.tag__list{
+    position: absolute;
+    left: 0;
+    border-radius: var(--br);
+    width: 100%;
 }
 
 .cards{

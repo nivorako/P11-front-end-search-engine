@@ -30,7 +30,7 @@ class App {
         const ustensil = new Ustensils();
         ustensil.render();
 
-        const appliance = new Appliance();
+        const appliance = new Appliance(recipes);
         appliance.render();
 
         recipes.forEach(recipe => {
