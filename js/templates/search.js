@@ -69,7 +69,7 @@ export default class Search{
     }
 
     render(){
-        const search = `
+        const search = /*html*/`
             <input class="search__input" placeholder="rechercher une recette" type="text">
             <div class="search__btn">
                 <i class="fa fa-search"></i>

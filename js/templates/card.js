@@ -23,7 +23,7 @@ export default class Card{
     
 
     render(){
-        const card = `
+        const card = /*html */`
             
                 <div class="card__thumb"></div>
                 <div class="card__body p-3">

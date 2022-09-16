@@ -67,6 +67,8 @@ li{
     opacity: .8;
 }
 
+.ingredientTag__title,
+.applianceTag__title,
 .tag__title{
     font-size: var(--fmed);
 }
@@ -75,12 +77,16 @@ li{
     border-radius: var(--br);
 }
 
+.ingredientTag__btn,
+.applianceTag__btn,
 .tag__btn{
     display: flex;
     justify-content: space-between;
     padding-top: 15px;
 }
 
+.ingredientTag__list,
+.applianceTag__list,
 .tag__list{
     position: absolute;
     left: 0;

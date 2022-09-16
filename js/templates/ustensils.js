@@ -4,7 +4,7 @@ export default class Ustensils {
     }
 
     render(){
-        const ustensil = `
+        const ustensil = /*html*/ `
             <div 
                 class="tag__row row d-flex align-items-center dropdown-toggle"
                 data-bs-toggle="dropdown"

@@ -7,7 +7,9 @@ export default class Appliance{
     }
 
     applianceOnClick(){
-            
+        const applianceTagList = document.querySelector(".applianceTag__list")
+        const applianceTagBtn = document.querySelector(".applianceTag__btn")
+
         this.toolsWrapper.addEventListener('click', () => {
             if(this.toolsWrapper.classList.contains('col-2')){
                 this.toolsWrapper.classList.remove("col-2")
@@ -16,18 +18,16 @@ export default class Appliance{
                 this.toolsWrapper.classList.remove("col-6")
                 this.toolsWrapper.classList.add('col-2')
             }
-            
-            const tagList = document.querySelector(".tag__list")
-            const tagBtn = document.querySelector(".tag__btn")
-            tagList.classList.toggle("hidden")
-            tagBtn.classList.toggle("hidden")
+                     
+            applianceTagList.classList.toggle("hidden")
+            applianceTagBtn.classList.toggle("hidden")
             
         })
     }
-
+ 
     listOnclick(){
-        const tagListItems = document.querySelectorAll('.tag__listItem') 
-        tagListItems.forEach(list => {
+        const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem') 
+        applianceTagListItems.forEach(list => {
            list.addEventListener('click', () => {
                 console.log('nom appareil: ', list.textContent)
            })
@@ -43,7 +43,7 @@ export default class Appliance{
                 if((Object.keys(recipe)[i] === "appliance") && (!applianceTab.includes(Object.values(recipe)[i]))){
                    applianceTab.push(Object.values(recipe)[i])
                    listHTML += `
-                        <li class="tag__listItem"> ${Object.values(recipe)[i]} </li>
+                        <li class="applianceTag__listItem"> ${Object.values(recipe)[i]} </li>
                    `;
                 }
             }
@@ -52,17 +52,17 @@ export default class Appliance{
     }
 
     render(){
-        const tool = `
-            <div class="tag__btn  bg-success" > 
-                <h2 class="tag__title text-center">appliance</h2>
+        const tool = /*html */ `
+            <div class="applianceTag__btn  bg-success" > 
+                <h2 class="applianceTag__title text-center">appliance</h2>
                 <i class="fas fa-chevron-up "></i>   
             </div>
-            <div class="tag__list hidden bg-success">
-                <div class="tag__listHead d-flex justify-content-between p-3">
-                    <input class="tag__input" type="text" placeholder="rechercher un appareil">
-                    <i class="fas fa-chevron-down "></i> 
+            <div class="applianceTag__list hidden bg-success">
+                <div class="applianceTag__listHead d-flex justify-content-between p-3">
+                    <input class="applianceTag__input" type="text" placeholder="rechercher un appareil">
+                    <i class="fas fa-chevron-down applianceTag__close"></i> 
                 </div>
-                <ul class="tag__listItems  bg-success">
+                <ul class="applianceTag__listItems  bg-success">
                         ${this.listItems()}        
                 </ul> 
            </div> 
