@@ -4,6 +4,7 @@ import Ustensils from './templates/ustensils.js';
 import Appliance from './templates/appliance.js';
 import Search from './templates/search.js';
 import Card from './templates/card.js';
+import Tag from './templates/tag.js';
 
 class App {
     constructor() {
@@ -24,10 +25,13 @@ class App {
         search.render()
         search.onSearch(recipes);
 
-        const ingredient = new Ingredient();
+        const tag = new Tag();
+        tag.render();
+
+        const ingredient = new Ingredient(recipes);
         ingredient.render();
 
-        const ustensil = new Ustensils();
+        const ustensil = new Ustensils(recipes);
         ustensil.render();
 
         const appliance = new Appliance(recipes);

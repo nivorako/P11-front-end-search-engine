@@ -1,43 +1,97 @@
 export default class Ingredient{
-    constructor(){
-        this.ingredientWrapper = document.querySelector('.tag__ingredients');
-        
+    constructor(recipes){
+        this.ingredientWrapper = document.querySelector('.tag__ingredients')
+        this.recipes = recipes
     }
 
     ingredientOnClick(){
-        const ingredientTagList = document.querySelector(".ingredientTag__list")
-        const ingredientTagBtn = document.querySelector(".ingredientTag__btn")
-
-        this.ingredientWrapper.addEventListener('click', () => {
-            if(this.ingredientWrapper.classList.contains('col-2')){
-                this.ingredientWrapper.classList.remove("col-2")
-                this.ingredientWrapper.classList.add('col-6')
-            }else if(this.ingredientWrapper.classList.contains('col-6')){
-                this.ingredientWrapper.classList.remove("col-6")
-                this.ingredientWrapper.classList.add('col-2')
+        const ingredientTagClose = document.querySelector(".ingredientTag__close")
+        ingredientTagClose.addEventListener('click', (e) => {
+            if(ingredientTagClose.classList.contains('fa-chevron-down')){
+                this.closeTag()
+            }else{
+                this.openTag()
             }
-                     
-            ingredientTagList.classList.toggle("hidden")
-            ingredientTagBtn.classList.toggle("hidden")
-            
+        })
+
+        document.addEventListener('click', (e) => {
+            if(!e.target.closest(".tag__ingredients")){
+                this.closeTag()
+            }
         })
     }
+
+    openTag(){
+        const ingredientTagTitle = document.querySelector('.ingredientTag__title')
+        const ingredientTagInput = document.querySelector('.ingredientTag__input')
+        const ingredientTagList = document.querySelector('.ingredientTag__list')
+        const ingredientTagclose = document.querySelector('.ingredientTag__close')
+        
+        this.ingredientWrapper.classList.remove("col-2")
+        this.ingredientWrapper.classList.add('col-6')
+
+        ingredientTagTitle.classList.add('hidden')
+        ingredientTagInput.classList.remove('hidden')
+        ingredientTagList.classList.remove('hidden')  
+
+        ingredientTagclose.classList.remove('fa-chevron-up')
+        ingredientTagclose.classList.add('fa-chevron-down')
+    }
+
+    closeTag(){
+        const ingredientTagTitle = document.querySelector('.ingredientTag__title')
+        const ingredientTagInput = document.querySelector('.ingredientTag__input')
+        const ingredientTagList = document.querySelector('.ingredientTag__list')
+        const ingredientTagclose = document.querySelector('.ingredientTag__close')
+        
+        this.ingredientWrapper.classList.add("col-2")
+        this.ingredientWrapper.classList.remove('col-6')
+
+        ingredientTagTitle.classList.remove('hidden')
+        ingredientTagInput.classList.add('hidden')
+        ingredientTagList.classList.add('hidden')  
+
+        ingredientTagclose.classList.add('fa-chevron-up')
+        ingredientTagclose.classList.remove('fa-chevron-down')
+    }
+
+    listItems(){
+        let listHTML = ""
+        let ingredientTab = []
+        this.recipes.forEach(recipe => {
+            const length = Object.entries(recipe).length
+            for(let i= 0; i < length; i++){
+                if((Object.keys(recipe)[i] === "ingredients") ){
+                    const ingredientLength = Object.values(recipe)[i].length
+                    for(let j = 0; j < ingredientLength; j++){
+                        console.log('ingredients: ', Object.values(recipe)[i][j].ingredient)
+                        if(!ingredientTab.includes(Object.values(recipe)[i][j].ingredient)){
+                            ingredientTab.push(Object.values(recipe)[i][j].ingredient)
+                       
+                            listHTML += `
+                                    <li class="ingredientTag__listItem col-6"> ${Object.values(recipe)[i][j].ingredient} </li>
+                            `;
+                        }
+                    }
+                }
+            }
+        })
+        return listHTML;
+    }
+
     render(){
         const ingredientTag = /*html*/ `
             <div class="ingredientTag__btn  bg-primary" > 
-                <h2 class="ingredientTag__title text-center">Ingredients</h2>
-                <i class="fas fa-chevron-up "></i>   
+                <h2 class="ingredientTag__title text-center">ingredients</h2>
+                <input class="ingredientTag__input hidden" type="text" placeholder="rechercher un ingredient"> 
+                <i class="fas fa-chevron-up ingredientTag__close"></i> 
             </div>
-            <div class="ingredientTag__list hidden bg-primary">
-                <div class="ingredientTag__listHead d-flex justify-content-between p-3">
-                    <input class="ingredientTag__input" type="text" placeholder="rechercher un ingredient">
-                    <i class="fas fa-chevron-down ingredientTag__close"></i> 
-                </div>
-                <ul class="ingredientTag__listItems  bg-success">
-                            
+            <div class="ingredientTag__list hidden bg-primary">        
+                <ul class="ingredientTag__listItems row bg-primary">
+                    ${this.listItems()}
                 </ul> 
             </div> 
-        `;
+            `;
 
         this.ingredientWrapper.innerHTML = ingredientTag;
         this.ingredientOnClick();

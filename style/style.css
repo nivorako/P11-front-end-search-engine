@@ -8,6 +8,7 @@
 } */
 
 *{
+    box-sizing: border-box;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     --fmed : medium;
     --br : 5px ;
@@ -18,6 +19,7 @@
 ul,
 li{
     list-style: none;
+    padding: 0;
 }
 
 .head__img{
@@ -54,6 +56,11 @@ li{
     height: 15px;
 }
 
+.fas:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
 
 
 .tag__ustensils,
@@ -69,7 +76,7 @@ li{
 
 .ingredientTag__title,
 .applianceTag__title,
-.tag__title{
+.ustensilTag__title{
     font-size: var(--fmed);
 }
 
@@ -79,7 +86,7 @@ li{
 
 .ingredientTag__btn,
 .applianceTag__btn,
-.tag__btn{
+.ustensilTag__btn{
     display: flex;
     justify-content: space-between;
     padding-top: 15px;
@@ -87,10 +94,14 @@ li{
 
 .ingredientTag__list,
 .applianceTag__list,
-.tag__list{
+.ustensilTag__list{
     position: absolute;
     left: 0;
     border-radius: var(--br);
+    width: 100%;
+}
+
+.ingredientTag__listItems{
     width: 100%;
 }
 

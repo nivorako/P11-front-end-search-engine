@@ -1,35 +1,71 @@
-
-
 export default class Appliance{
     constructor(recipes){
-        this.toolsWrapper = document.querySelector('.tag__appliance');
+        this.applianceWrapper = document.querySelector('.tag__appliance');
         this.recipes = recipes
     }
 
     applianceOnClick(){
-        const applianceTagList = document.querySelector(".applianceTag__list")
-        const applianceTagBtn = document.querySelector(".applianceTag__btn")
-
-        this.toolsWrapper.addEventListener('click', () => {
-            if(this.toolsWrapper.classList.contains('col-2')){
-                this.toolsWrapper.classList.remove("col-2")
-                this.toolsWrapper.classList.add('col-6')
-            }else if(this.toolsWrapper.classList.contains('col-6')){
-                this.toolsWrapper.classList.remove("col-6")
-                this.toolsWrapper.classList.add('col-2')
+        const applianceTagclose = document.querySelector('.applianceTag__close')
+      
+        
+        applianceTagclose.addEventListener('click', (e) => {
+            if(applianceTagclose.classList.contains('fa-chevron-down')){
+                this.closeTag()
+                console.log('close')
+            }else{
+                this.openTag()
+               console.log('open')
             }
-                     
-            applianceTagList.classList.toggle("hidden")
-            applianceTagBtn.classList.toggle("hidden")
-            
+        })
+
+        document.addEventListener('click', (e) => {
+            if(!e.target.closest(".tag__appliance")){
+                this.closeTag()
+            }
         })
     }
+
+    openTag(){
+        const applianceTagTitle = document.querySelector('.applianceTag__title')
+        const applianceTagInput = document.querySelector('.applianceTag__input')
+        const applianceTagList = document.querySelector('.applianceTag__list')
+        const applianceTagclose = document.querySelector('.applianceTag__close')
+        
+        this.applianceWrapper.classList.remove("col-2")
+        this.applianceWrapper.classList.add('col-6')
+
+        applianceTagTitle.classList.add('hidden')
+        applianceTagInput.classList.remove('hidden')
+        applianceTagList.classList.remove('hidden')  
+
+        applianceTagclose.classList.remove('fa-chevron-up')
+        applianceTagclose.classList.add('fa-chevron-down')
+    }
+
+    closeTag(){
+        const applianceTagTitle = document.querySelector('.applianceTag__title')
+        const applianceTagInput = document.querySelector('.applianceTag__input')
+        const applianceTagList = document.querySelector('.applianceTag__list')
+        const applianceTagclose = document.querySelector('.applianceTag__close')
+        
+        this.applianceWrapper.classList.add("col-2")
+        this.applianceWrapper.classList.remove('col-6')
+
+        applianceTagTitle.classList.remove('hidden')
+        applianceTagInput.classList.add('hidden')
+        applianceTagList.classList.add('hidden')  
+
+        applianceTagclose.classList.add('fa-chevron-up')
+        applianceTagclose.classList.remove('fa-chevron-down')
+    }
+
  
     listOnclick(){
         const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem') 
         applianceTagListItems.forEach(list => {
            list.addEventListener('click', () => {
                 console.log('nom appareil: ', list.textContent)
+                
            })
         })
     }
@@ -53,25 +89,25 @@ export default class Appliance{
 
     render(){
         const tool = /*html */ `
-            <div class="applianceTag__btn  bg-success" > 
-                <h2 class="applianceTag__title text-center">appliance</h2>
-                <i class="fas fa-chevron-up "></i>   
-            </div>
-            <div class="applianceTag__list hidden bg-success">
-                <div class="applianceTag__listHead d-flex justify-content-between p-3">
-                    <input class="applianceTag__input" type="text" placeholder="rechercher un appareil">
-                    <i class="fas fa-chevron-down applianceTag__close"></i> 
-                </div>
-                <ul class="applianceTag__listItems  bg-success">
-                        ${this.listItems()}        
-                </ul> 
-           </div> 
+        <div class="applianceTag__btn  bg-success" > 
+            <h2 class="applianceTag__title text-center">Appareil</h2>
+            <input class="applianceTag__input hidden" type="text" placeholder="rechercher un appareil"> 
+            <i class="fas fa-chevron-up applianceTag__close"></i> 
+        </div>
+        <div class="applianceTag__list hidden bg-success">
+        
+            
+                
+            <ul class="applianceTag__listItems bg-success">
+                    ${this.listItems()}
+            </ul> 
+        </div> 
             
         `;
 
-        this.toolsWrapper.innerHTML = tool;
+        this.applianceWrapper.innerHTML = tool;
         this.listOnclick();
         this.applianceOnClick();
-        return this.toolsWrapper;
+        return this.applianceWrapper;
     }
 }
