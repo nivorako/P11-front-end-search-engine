@@ -46,6 +46,7 @@ export default class Card{
            
         `;
         this.card.innerHTML = card
+        
         return this.card
     }
 }

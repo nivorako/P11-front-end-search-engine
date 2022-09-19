@@ -99,6 +99,8 @@ li{
     left: 0;
     border-radius: var(--br);
     width: 100%;
+    max-height: 400px; 
+    overflow-y: scroll;
 }
 
 .ingredientTag__listItems{
@@ -109,6 +111,13 @@ li{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 30px;
+
+}
+
+/* card */
+article{
+    margin-bottom: 10px;
+   
 }
 
 .card__thumb{
@@ -122,6 +131,10 @@ li{
     font-size: var(--fs);
     background-color: var(--primary);
     border-radius: 0 0 var(--br) var(--br);
+    height: 200px;
+    overflow: hidden;
+    /* white-space: nowrap;
+    text-overflow: ellipsis; */
 }
 
 .card__head{

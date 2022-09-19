@@ -79,7 +79,7 @@ export default class Appliance{
                 if((Object.keys(recipe)[i] === "appliance") && (!applianceTab.includes(Object.values(recipe)[i]))){
                    applianceTab.push(Object.values(recipe)[i])
                    listHTML += `
-                        <li class="applianceTag__listItem"> ${Object.values(recipe)[i]} </li>
+                        <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
                    `;
                 }
             }
@@ -94,11 +94,8 @@ export default class Appliance{
             <input class="applianceTag__input hidden" type="text" placeholder="rechercher un appareil"> 
             <i class="fas fa-chevron-up applianceTag__close"></i> 
         </div>
-        <div class="applianceTag__list hidden bg-success">
-        
-            
-                
-            <ul class="applianceTag__listItems bg-success">
+        <div class="applianceTag__list hidden bg-success p-3">        
+            <ul class="applianceTag__listItems row bg-success p-">
                     ${this.listItems()}
             </ul> 
         </div> 

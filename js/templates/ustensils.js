@@ -72,7 +72,7 @@ export default class Ustensils {
                             ustensilTab.push(Object.values(recipe)[i][j])
                                 ustensilTab.push(Object.values(recipe)[i][j])
                                 listHTML += `
-                                        <li class="ustensilTag__listItem"> ${Object.values(recipe)[i][j]} </li>
+                                        <li class="ustensilTag__listItem col-4"> ${Object.values(recipe)[i][j]} </li>
                                 `;
                         }
                     }
@@ -90,7 +90,7 @@ export default class Ustensils {
             <i class="fas fa-chevron-up ustensilTag__close"></i> 
         </div>
         <div class="ustensilTag__list hidden bg-danger p-3">            
-            <ul class="ustensilTag__listItems bg-danger">
+            <ul class="ustensilTag__listItems row bg-danger">
                        ${this.listItems()}
             </ul> 
         </div> 

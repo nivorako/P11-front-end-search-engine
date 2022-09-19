@@ -69,7 +69,7 @@ export default class Ingredient{
                             ingredientTab.push(Object.values(recipe)[i][j].ingredient)
                        
                             listHTML += `
-                                    <li class="ingredientTag__listItem col-6"> ${Object.values(recipe)[i][j].ingredient} </li>
+                                    <li class="ingredientTag__listItem col-4"> ${Object.values(recipe)[i][j].ingredient} </li>
                             `;
                         }
                     }
@@ -86,7 +86,7 @@ export default class Ingredient{
                 <input class="ingredientTag__input hidden" type="text" placeholder="rechercher un ingredient"> 
                 <i class="fas fa-chevron-up ingredientTag__close"></i> 
             </div>
-            <div class="ingredientTag__list hidden bg-primary">        
+            <div class="ingredientTag__list hidden bg-primary p-3">        
                 <ul class="ingredientTag__listItems row bg-primary">
                     ${this.listItems()}
                 </ul> 
