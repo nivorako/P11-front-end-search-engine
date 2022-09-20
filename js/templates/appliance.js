@@ -63,13 +63,14 @@ export default class Appliance{
 
  
     listOnclick(){
+        const tagItems = document.querySelector('.tag__items')
         const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem')
         applianceTagListItems.forEach(list => {    
             list.addEventListener('click', () => {
                 
                 const tag = new Tag(list.textContent)
-                tag.render()
-               
+                const tagTemplate = tag.render()
+                tagItems.appendChild(tagTemplate)
             })
         })
         

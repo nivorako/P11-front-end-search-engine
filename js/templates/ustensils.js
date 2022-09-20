@@ -1,4 +1,4 @@
-
+import Tag from "./tag.js";
 export default class Ustensils {
     constructor(recipes){
         this.ustensilsWrapper = document.querySelector('.tag__ustensils')
@@ -59,6 +59,20 @@ export default class Ustensils {
         ustensilTagclose.classList.remove('fa-chevron-down')
     }
 
+    listOnclick(){
+        const tagItems = document.querySelector('.tag__items')
+        const applianceTagListItems = document.querySelectorAll('.ustensilTag__listItem')
+        applianceTagListItems.forEach(list => {    
+            list.addEventListener('click', () => {
+                
+                const tag = new Tag(list.textContent)
+                const tagTemplate = tag.render()
+                tagItems.appendChild(tagTemplate)
+            })
+        })
+        
+    }
+
     listItems(){
         let listHTML = ""
         let ustensilTab = []
@@ -98,6 +112,7 @@ export default class Ustensils {
 
         this.ustensilsWrapper.innerHTML = ustensil;
         this.ustensilOnClick();
+        this.listOnclick();
         return this.ustensilsWrapper;
     }
 }

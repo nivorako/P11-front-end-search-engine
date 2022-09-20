@@ -4,7 +4,6 @@ import NotFound from "./notFound.js"
 export default class Search{
     constructor () {
         this.search = document.querySelector('.search')
-        //this.search = document.createElement('div')
     }
 
     onSearch(recipes){

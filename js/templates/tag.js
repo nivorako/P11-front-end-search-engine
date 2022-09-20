@@ -2,7 +2,7 @@
 
 export default class Tag{
     constructor(text){
-        this.tagWrapper = document.querySelector('.tag__items')
+        this.tagWrapper = document.createElement('div')
         this.text = text
     }
 
@@ -14,17 +14,14 @@ export default class Tag{
 
     render(){
         const tag =/*html */ `
-        <ul class="tag__item  text-center row">
+        <ul class="tag__item  text-center">
             ${this.text}
         </ul>
         `;
 
         this.tagWrapper.innerHTML = tag
+        this.tagWrapper.classList.add('col-2')
         this.applianceTagSort()
         return this.tagWrapper
     }
 }
-
-{/* <li class="col-2 tag__itemTexte"><span class="tag__itemText"> liste </span></li>
-            <li class="col-2 tag__itemTexte"><span class="tag__itemText"> liste </span></li>
-            <li class="col-2 tag__itemTexte"><span class="tag__itemText"> liste </span></li> */}

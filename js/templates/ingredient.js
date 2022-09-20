@@ -1,3 +1,5 @@
+import Tag from "./tag.js"
+
 export default class Ingredient{
     constructor(recipes){
         this.ingredientWrapper = document.querySelector('.tag__ingredients')
@@ -55,6 +57,20 @@ export default class Ingredient{
         ingredientTagclose.classList.remove('fa-chevron-down')
     }
 
+    listOnclick(){
+        const tagItems = document.querySelector('.tag__items')
+        const applianceTagListItems = document.querySelectorAll('.ingredientTag__listItem')
+        applianceTagListItems.forEach(list => {    
+            list.addEventListener('click', () => {
+                
+                const tag = new Tag(list.textContent)
+                const tagTemplate = tag.render()
+                tagItems.appendChild(tagTemplate)
+            })
+        })
+        
+    }
+
     listItems(){
         let listHTML = ""
         let ingredientTab = []
@@ -94,6 +110,7 @@ export default class Ingredient{
 
         this.ingredientWrapper.innerHTML = ingredientTag;
         this.ingredientOnClick();
+        this.listOnclick();
         return this.ingredientWrapper;
     }
 }
