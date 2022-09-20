@@ -1,3 +1,5 @@
+import Tag from "./tag.js";
+
 export default class Appliance{
     constructor(recipes){
         this.applianceWrapper = document.querySelector('.tag__appliance');
@@ -61,13 +63,16 @@ export default class Appliance{
 
  
     listOnclick(){
-        const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem') 
-        applianceTagListItems.forEach(list => {
-           list.addEventListener('click', () => {
-                console.log('nom appareil: ', list.textContent)
+        const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem')
+        applianceTagListItems.forEach(list => {    
+            list.addEventListener('click', () => {
                 
-           })
+                const tag = new Tag(list.textContent)
+                tag.render()
+               
+            })
         })
+        
     }
 
     listItems(){

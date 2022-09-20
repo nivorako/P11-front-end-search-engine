@@ -2,25 +2,24 @@ export default class Card{
     constructor(recipe){
         this.card = document.createElement('article')
         this.recipe = recipe
-        this.cardList = (ingredients) => {
-            let cardListHTML = ""
-            ingredients.forEach(elt => {
-                cardListHTML += `
-                <li class="card__listItem">
-                    <span class="card__ingredient"> ${elt.ingredient} </span>
-                    ${elt.quantity ? elt.quantity.toString().trim() : ""} ${
-                        elt.unit ? elt.unit.toLowerCase().trim() : ""
-                      }
-                </li>
-            `
-            return cardListHTML
-            })
-            
-            return cardListHTML
-        }
     }
 
-    
+    cardList(ingredients){
+        let cardListHTML = ""
+        ingredients.forEach(elt => {
+            cardListHTML += `
+            <li class="card__listItem">
+                <span class="card__ingredient"> ${elt.ingredient} </span>
+                ${elt.quantity ? elt.quantity.toString().trim() : ""} ${
+                    elt.unit ? elt.unit.toLowerCase().trim() : ""
+                  }
+            </li>
+        `
+        return cardListHTML
+        })
+        
+        return cardListHTML
+    }
 
     render(){
         const card = /*html */`

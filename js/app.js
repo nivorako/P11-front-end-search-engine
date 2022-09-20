@@ -21,12 +21,9 @@ class App {
         console.log('RECIPES: ', recipes);
 
         const search = new Search();
-       // this.searchWrapper.appendChild(search.render());
+      
         search.render()
         search.onSearch(recipes);
-
-        const tag = new Tag();
-        tag.render();
 
         const ingredient = new Ingredient(recipes);
         ingredient.render();

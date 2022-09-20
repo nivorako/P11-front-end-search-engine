@@ -61,7 +61,11 @@ li{
     transform: scale(1.2);
 }
 
-
+.tag__itemTexte{
+    border: red thin solid;
+    margin-left: 10px;
+    border-radius: var(--br);
+}
 
 .tag__ustensils,
 .tag__ingredients,
@@ -71,7 +75,7 @@ li{
     height: 50px;
     margin-right: 10px;
     border-radius: var(--br);
-    opacity: .8;
+   
 }
 
 .ingredientTag__title,
@@ -103,6 +107,13 @@ li{
     overflow-y: scroll;
 }
 
+.applianceTag__listItem:hover,
+.ingredientTag__listItem:hover,
+.ustensilTag__listItem:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
 .ingredientTag__listItems{
     width: 100%;
 }
@@ -132,9 +143,8 @@ article{
     background-color: var(--primary);
     border-radius: 0 0 var(--br) var(--br);
     height: 200px;
-    overflow: hidden;
-    /* white-space: nowrap;
-    text-overflow: ellipsis; */
+    max-height: 200px;
+    overflow-y: scroll;
 }
 
 .card__head{

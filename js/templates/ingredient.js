@@ -64,7 +64,6 @@ export default class Ingredient{
                 if((Object.keys(recipe)[i] === "ingredients") ){
                     const ingredientLength = Object.values(recipe)[i].length
                     for(let j = 0; j < ingredientLength; j++){
-                        console.log('ingredients: ', Object.values(recipe)[i][j].ingredient)
                         if(!ingredientTab.includes(Object.values(recipe)[i][j].ingredient)){
                             ingredientTab.push(Object.values(recipe)[i][j].ingredient)
                        
