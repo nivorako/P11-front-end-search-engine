@@ -1,4 +1,5 @@
 import Card from "./card.js"
+import NotFound from "./notFound.js"
 
 export default class Search{
     constructor () {
@@ -9,14 +10,14 @@ export default class Search{
     onSearch(recipes){
         const searchInput = document.querySelector('.search__input')
         const cards = document.querySelector('.cards')
+        const notFoundWrapper = document.querySelector('.notFound')
         searchInput.addEventListener('keyup', (e) => {
+           
             let inputValue = e.target.value
             if(inputValue.length > 3){
                 cards.innerHTML = ""
                 let selectedList = []
-
                 recipes.forEach(recipe => {
-                    
                     const length = Object.entries(recipe).length
                     // on remplit list
                     for(let i= 0; i< length; i++) {
@@ -48,16 +49,22 @@ export default class Search{
                         }
                     }
                 })
-                
-                selectedList.forEach(selected => {
-                    const newCard = new Card(selected)
-                    const newCardTemplate = newCard.render()
-                    
-                    cards.appendChild(newCardTemplate)
-                })
-
+                if(selectedList.length === 0){
+                    const notFound = new NotFound()
+                    notFound.render()
+                    notFoundWrapper.classList.remove('hidden')
+                }else{
+                    selectedList.forEach(selected => {
+                        const newCard = new Card(selected)
+                        const newCardTemplate = newCard.render()
+                        
+                        cards.appendChild(newCardTemplate)
+                    })
+                }
+               
             }
             if(inputValue.length === 3){
+                notFoundWrapper.classList.add('hidden')
                 recipes.forEach(recipe => {
                     const card = new Card(recipe)
                     const template = card.render()
