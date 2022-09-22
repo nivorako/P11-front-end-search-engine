@@ -1,4 +1,6 @@
 import Tag from "./tag.js";
+
+
 export default class Ustensils {
     constructor(recipes){
         this.ustensilsWrapper = document.querySelector('.tag__ustensils')
@@ -60,14 +62,21 @@ export default class Ustensils {
 
     listOnclick(){
         const tagItems = document.querySelector('.tag__items')
+        // selectionne les listes dans ustensilTag__listItem
         const applianceTagListItems = document.querySelectorAll('.ustensilTag__listItem')
-        applianceTagListItems.forEach(list => {    
+        applianceTagListItems.forEach(list => {   
+            // a chaque clic sur une liste:  
             list.addEventListener('click', () => {
-                
+                // donner le textContent à new Tag() 
                 const tag = new Tag(list.textContent)
-                const tagTemplate = tag.render()
-                tagItems.appendChild(tagTemplate)
-                list.textContent = ""
+                // si instance new Tag() < 3 
+                if(tag.instanceId < 4){
+                    const tagTemplate = tag.render()
+                    // et insérer chaque tagTemplate dans tagItems
+                    tagItems.appendChild(tagTemplate)
+                    // supprimer le content de la liste dans ustensilTag__listItem
+                    list.textContent = ""
+                }
             })
         })
         

@@ -1,7 +1,9 @@
 // import Appliance from "./appliance.js";
 
 export default class Tag{
+    static count = 0
     constructor(text){
+        this.instanceId = ++Tag.count
         this.tagWrapper = document.createElement('div')
         this.text = text
     }

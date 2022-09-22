@@ -67,13 +67,14 @@ export default class Appliance{
         const allTagItem = document.querySelectorAll('.tag__item')
         const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem')
         applianceTagListItems.forEach(list => {    
-            list.addEventListener('click', () => {
-                
+            list.addEventListener('click', () => {           
                 const tag = new Tag(list.textContent)
-                const tagTemplate = tag.render()   
-                tagItems.appendChild(tagTemplate)
-                list.textContent = ""
-                
+                if(tag.instanceId < 4){
+                    const tagTemplate = tag.render()   
+                    tagItems.appendChild(tagTemplate)
+                    list.textContent = ""
+                    console.log('compteur tag: ', tag.instanceId)
+                }
             })
         })
     }

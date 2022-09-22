@@ -1,6 +1,8 @@
 import Card from "./card.js"
 import NotFound from "./notFound.js"
 import Appliance from "./appliance.js"
+import Ingredient from "./ingredient.js"
+import Ustensils from "./ustensils.js"
 
 export default class Search{
     constructor () {
@@ -11,9 +13,11 @@ export default class Search{
         const searchInput = document.querySelector('.search__input')
         const cards = document.querySelector('.cards')
         const notFoundWrapper = document.querySelector('.notFound')
+        // a chaque pression sur clavier: 
         searchInput.addEventListener('keyup', (e) => {
            
             let inputValue = e.target.value
+            // si longueur de mot saisi
             if(inputValue.length >= 3){
                 cards.innerHTML = ""
                 let selectedList = []
@@ -49,21 +53,30 @@ export default class Search{
                         }
                     }
                 })
-                console.log('selected: ', selectedList)
-                
+                // si la liste est vide
                 if(selectedList.length === 0){
                     const notFound = new NotFound()
                     notFound.render()
                     notFoundWrapper.classList.remove('hidden')
                 }else{
-                    //passer selectedlist en paramettre a la methode list ultem class ingredient
+                    // passer selectedlist à new Appliance() 
                     const appliance = new Appliance(selectedList)
+                    // et afficher
                     appliance.render()
+                    // pareil pour ingredient
+                    const ingredient = new Ingredient(selectedList)
+                    ingredient.render()
+                    //et ustensils
+                    const ustensil = new Ustensils(selectedList)
+                    ustensil.render()
 
+                    // supprimer la page not found
+                    notFoundWrapper.classList.add('hidden')
+                    
+                    // donner chaque list de selectedList à newcard pour afficher dans cards
                     selectedList.forEach(selected => {
                         const newCard = new Card(selected)
                         const newCardTemplate = newCard.render()
-                        
                         cards.appendChild(newCardTemplate)
                     })
                 }
