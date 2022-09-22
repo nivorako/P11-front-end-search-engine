@@ -66,11 +66,12 @@ export default class Ingredient{
                 const tag = new Tag(list.textContent)
                 const tagTemplate = tag.render()
                 tagItems.appendChild(tagTemplate)
+                list.textContent = ""
             })
         })
         
     }
-
+    //parametre liste mise a jour
     listItems(){
         let listHTML = ""
         let ingredientTab = []

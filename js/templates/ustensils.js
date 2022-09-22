@@ -3,7 +3,6 @@ export default class Ustensils {
     constructor(recipes){
         this.ustensilsWrapper = document.querySelector('.tag__ustensils')
         this.recipes = recipes
-        console.log('recipes: ', this.recipes)
     }
 
     ustensilOnClick(){
@@ -68,6 +67,7 @@ export default class Ustensils {
                 const tag = new Tag(list.textContent)
                 const tagTemplate = tag.render()
                 tagItems.appendChild(tagTemplate)
+                list.textContent = ""
             })
         })
         
@@ -84,15 +84,15 @@ export default class Ustensils {
                     for(let j = 0; j < ustensLength; j++){
                         if(!ustensilTab.includes(Object.values(recipe)[i][j])){
                             ustensilTab.push(Object.values(recipe)[i][j])
-                                ustensilTab.push(Object.values(recipe)[i][j])
-                                listHTML += `
-                                        <li class="ustensilTag__listItem col-4"> ${Object.values(recipe)[i][j]} </li>
-                                `;
+                            listHTML += `
+                                    <li class="ustensilTag__listItem col-4"> ${Object.values(recipe)[i][j]} </li>
+                            `;
                         }
                     }
                 }
             }
         })
+        
         return listHTML;
     }
 
