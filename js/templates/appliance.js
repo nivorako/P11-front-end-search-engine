@@ -1,4 +1,5 @@
 import Tag from "./tag.js";
+import Card from "./card.js";
 
 export default class Appliance{
     constructor(recipes){
@@ -63,17 +64,66 @@ export default class Appliance{
 
  
     listOnclick(){
+        const cardWrapper = document.querySelector('.cards');
         const tagItems = document.querySelector('.tag__items')
-        const allTagItem = document.querySelectorAll('.tag__item')
+        // ensemble des listes dans applianceTag
         const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem')
-        applianceTagListItems.forEach(list => {    
-            list.addEventListener('click', () => {           
-                const tag = new Tag(list.textContent)
+        applianceTagListItems.forEach(list => { 
+            const selectedList = []
+            // contenu texte de la liste
+            const text = list.textContent
+            // sur chaque liste   
+            list.addEventListener('click', () => { 
+                
+                // instance Tag()          
+                const tag = new Tag(text)   
+                // si nbre d'instance            
                 if(tag.instanceId < 4){
+                    
                     const tagTemplate = tag.render()   
                     tagItems.appendChild(tagTemplate)
+                    this.recipes.forEach(recipe => {
+                        
+                        if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
+                            console.log('text: ', text.toLowerCase())
+                            selectedList.push(recipe)
+                           
+                        } 
+                        // if(recipe.ingredients){
+                        //     const ingredientLength = recipe.ingredients.length
+                        //     for(let i=0; i<ingredientLength; i++){
+                                
+                        //         if(recipe.ingredients[i].ingredient.toLowerCase().includes(list.textContent.toLowerCase())){
+                        //             selectedList.push(recipe)
+                        //         }
+                        //     }
+                        // }
+                        // if(recipe.ustensils){
+                        //     const ustensilLength = recipe.ustensils.length
+                        //     for(let j=0; j<ustensilLength; j++){
+                        //         if(recipe.ustensils[j].toLowerCase().includes(list.textContent.toLowerCase())){
+                        //             selectedList.push(recipe)
+                        //         }
+                        //     }
+                        // }
                     list.textContent = ""
-                    console.log('compteur tag: ', tag.instanceId)
+                    // this.recipes.forEach(recipe => {
+                    //     const newCard = new Card(recipe)
+                    //     const template = newCard.render()
+                    //     cardWrapper.appendChild(template)
+                    // })
+                    })
+                    console.log('selectedList: ', selectedList)
+
+                    const tagClose = document.querySelector('.tag__itemClose')
+                    const tagItem = document.querySelector('.tag__item')
+                    console.log('tag item close: ', tagClose)
+                    tagClose.addEventListener('click', () => {
+                        console.log('tagItem:' , tagItem)
+                        tagItem.style.display = "none"
+                        console.log('none')
+                    })
+                    
                 }
             })
         })
@@ -93,6 +143,7 @@ export default class Appliance{
                 }
             }
         })
+        console.log("appliance tab: ", applianceTab)
         return listHTML;
     }
 

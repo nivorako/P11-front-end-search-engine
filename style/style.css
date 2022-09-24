@@ -67,6 +67,10 @@ li{
     border-radius: var(--br);
 }
 
+.tag__itemClose:hover{
+    transform: scale(1.1);
+}
+
 .tag__ustensils,
 .tag__ingredients,
 .tag__appliance{

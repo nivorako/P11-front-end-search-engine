@@ -1,4 +1,5 @@
 import Tag from "./tag.js"
+import Card from "./card.js"
 
 export default class Ingredient{
     constructor(recipes){
@@ -67,7 +68,6 @@ export default class Ingredient{
                     const tagTemplate = tag.render()
                     tagItems.appendChild(tagTemplate)
                     list.textContent = ""
-                    console.log('compteur tag: ', tag.instanceId)
                 }
             })
         })

@@ -39,6 +39,7 @@ export default class Search{
                         for(let j=0; j<ustensilLength; j++){
                             if(recipe.ustensils[j].toLowerCase().includes(inputValue.toLowerCase())){
                                 console.log('ustensil: ', recipe.ustensils[j])
+                                selectedList.push(recipe)
                             }
                         }
                     }
@@ -50,6 +51,7 @@ export default class Search{
                     if(recipe.description){
                         if(recipe.description.toLowerCase().includes(inputValue.toLowerCase())){
                             console.log('description: ', recipe.description)
+                            selectedList.push(recipe)
                         }
                     }
                 })
@@ -72,7 +74,7 @@ export default class Search{
 
                     // supprimer la page not found
                     notFoundWrapper.classList.add('hidden')
-                    
+
                     // donner chaque list de selectedList à newcard pour afficher dans cards
                     selectedList.forEach(selected => {
                         const newCard = new Card(selected)

@@ -8,13 +8,13 @@ export default class Tag{
         this.text = text
     }
 
+   
+
     render(){
         const tag =/*html */ `
 
             <div class="tag__item d-flex justify-content-between align-items-center">
-                <span class=" text-center">
-                    ${this.text}
-                </span>
+                ${this.text}
                 <i class="fa fa-window-close tag__itemClose"></i>
 
             </div>
@@ -25,3 +25,8 @@ export default class Tag{
         return this.tagWrapper
     }
 }
+
+
+{/* <span class=" text-center">
+                    ${this.text}
+                </span> */}
