@@ -67,16 +67,16 @@ export default class Ustensils {
         applianceTagListItems.forEach(list => {   
             // a chaque clic sur une liste:  
             list.addEventListener('click', () => {
-                // donner le textContent à new Tag() 
-                const tag = new Tag(list.textContent)
-                // si instance new Tag() < 3 
-                if(tag.instanceId < 4){
-                    const tagTemplate = tag.render()
-                    // et insérer chaque tagTemplate dans tagItems
-                    tagItems.appendChild(tagTemplate)
-                    // supprimer le content de la liste dans ustensilTag__listItem
-                    list.textContent = ""
-                }
+                // // donner le textContent à new Tag() 
+                // const tag = new Tag(list.textContent)
+                // // si instance new Tag() < 3 
+                // if(tag.instanceId < 4){
+                //     const tagTemplate = tag.render()
+                //     // et insérer chaque tagTemplate dans tagItems
+                //     tagItems.appendChild(tagTemplate)
+                //     // supprimer le content de la liste dans ustensilTag__listItem
+                //     list.textContent = ""
+                // }
             })
         })
         

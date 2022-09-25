@@ -63,12 +63,13 @@ export default class Ingredient{
         const applianceTagListItems = document.querySelectorAll('.ingredientTag__listItem')
         applianceTagListItems.forEach(list => {    
             list.addEventListener('click', () => {
-                const tag = new Tag(list.textContent)
-                if(tag.instanceId < 4){
-                    const tagTemplate = tag.render()
-                    tagItems.appendChild(tagTemplate)
-                    list.textContent = ""
-                }
+                // const tag = new Tag(list.textContent)
+                // if(tag.instanceId < 4){
+                //     console.log('instanceId: ', tag.instanceId)
+                //     const tagTemplate = tag.render()
+                //     tagItems.appendChild(tagTemplate)
+                //     list.textContent = ""
+                // }
             })
         })
         

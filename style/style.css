@@ -67,6 +67,12 @@ li{
     border-radius: var(--br);
 }
 
+.tag__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .tag__itemClose:hover{
     transform: scale(1.1);
 }

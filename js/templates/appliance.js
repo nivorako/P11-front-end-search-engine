@@ -76,54 +76,26 @@ export default class Appliance{
             list.addEventListener('click', () => { 
                 
                 // instance Tag()          
-                const tag = new Tag(text)   
+                const tag = new Tag(text)
+                //tag.tagItemClose()   
                 // si nbre d'instance            
                 if(tag.instanceId < 4){
-                    
-                    const tagTemplate = tag.render()   
-                    tagItems.appendChild(tagTemplate)
-                    this.recipes.forEach(recipe => {
-                        
-                        if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
-                            console.log('text: ', text.toLowerCase())
-                            selectedList.push(recipe)
-                           
-                        } 
-                        // if(recipe.ingredients){
-                        //     const ingredientLength = recipe.ingredients.length
-                        //     for(let i=0; i<ingredientLength; i++){
-                                
-                        //         if(recipe.ingredients[i].ingredient.toLowerCase().includes(list.textContent.toLowerCase())){
-                        //             selectedList.push(recipe)
-                        //         }
-                        //     }
-                        // }
-                        // if(recipe.ustensils){
-                        //     const ustensilLength = recipe.ustensils.length
-                        //     for(let j=0; j<ustensilLength; j++){
-                        //         if(recipe.ustensils[j].toLowerCase().includes(list.textContent.toLowerCase())){
-                        //             selectedList.push(recipe)
-                        //         }
-                        //     }
-                        // }
-                    list.textContent = ""
-                    // this.recipes.forEach(recipe => {
-                    //     const newCard = new Card(recipe)
-                    //     const template = newCard.render()
-                    //     cardWrapper.appendChild(template)
-                    // })
-                    })
-                    console.log('selectedList: ', selectedList)
+                    // appliquer render() à tag
+                    tag.tagItemClose() 
+                    const tagTemplate = tag.render()
 
-                    const tagClose = document.querySelector('.tag__itemClose')
-                    const tagItem = document.querySelector('.tag__item')
-                    console.log('tag item close: ', tagClose)
-                    tagClose.addEventListener('click', () => {
-                        console.log('tagItem:' , tagItem)
-                        tagItem.style.display = "none"
-                        console.log('none')
-                    })
+                    // le placer dans tagItems
+                    tagItems.appendChild(tagTemplate)
                     
+                    // console.log('selectedList: ', selectedList)
+                    const tagItem = document.querySelector('.tag__item')
+                    const tagClose = document.querySelector('.tag__itemClose')
+                    // à chaque clic, faire ceci :
+                    // tagClose.addEventListener('click', () => {
+                    //     console.log('tagItem:' , tagItem)
+                    //     tagItem.style.display = "none"
+                    //     console.log('none')
+                    // })         
                 }
             })
         })
@@ -143,7 +115,6 @@ export default class Appliance{
                 }
             }
         })
-        console.log("appliance tab: ", applianceTab)
         return listHTML;
     }
 
@@ -168,3 +139,35 @@ export default class Appliance{
         return this.applianceWrapper;
     }
 }
+
+
+// this.recipes.forEach(recipe => {
+                        
+//     if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
+//         console.log('text: ', text.toLowerCase())
+//         selectedList.push(recipe)
+       
+//     } 
+//     // if(recipe.ingredients){
+//     //     const ingredientLength = recipe.ingredients.length
+//     //     for(let i=0; i<ingredientLength; i++){
+            
+//     //         if(recipe.ingredients[i].ingredient.toLowerCase().includes(list.textContent.toLowerCase())){
+//     //             selectedList.push(recipe)
+//     //         }
+//     //     }
+//     // }
+//     // if(recipe.ustensils){
+//     //     const ustensilLength = recipe.ustensils.length
+//     //     for(let j=0; j<ustensilLength; j++){
+//     //         if(recipe.ustensils[j].toLowerCase().includes(list.textContent.toLowerCase())){
+//     //             selectedList.push(recipe)
+//     //         }
+//     //     }
+//     // }
+// list.textContent = ""
+// // this.recipes.forEach(recipe => {
+// //     const newCard = new Card(recipe)
+// //     const template = newCard.render()
+// //     cardWrapper.appendChild(template)
+// // })
