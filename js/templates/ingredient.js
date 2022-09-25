@@ -60,16 +60,16 @@ export default class Ingredient{
 
     listOnclick(){
         const tagItems = document.querySelector('.tag__items')
-        const applianceTagListItems = document.querySelectorAll('.ingredientTag__listItem')
-        applianceTagListItems.forEach(list => {    
-            list.addEventListener('click', () => {
-                // const tag = new Tag(list.textContent)
-                // if(tag.instanceId < 4){
-                //     console.log('instanceId: ', tag.instanceId)
-                //     const tagTemplate = tag.render()
-                //     tagItems.appendChild(tagTemplate)
-                //     list.textContent = ""
-                // }
+        const ingredientTagListItems = document.querySelectorAll('.ingredientTag__listItem')
+        ingredientTagListItems.forEach(ingredientTagList => {    
+            ingredientTagList.addEventListener('click', () => {
+                const tag = new Tag(ingredientTagList.textContent)
+                
+                console.log('instanceId: ', tag.instanceId)
+                const tagTemplate = tag.render()
+                tagItems.appendChild(tagTemplate)
+                ingredientTagList.textContent = ""
+                
             })
         })
         
