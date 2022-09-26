@@ -1,5 +1,7 @@
 import Tag from "./tag.js";
 import Card from "./card.js";
+import SelectedRecipe from "../factories/selectedRecipe.js";
+
 
 export default class Appliance{
     constructor(recipes){
@@ -14,10 +16,8 @@ export default class Appliance{
         applianceTagclose.addEventListener('click', (e) => {
             if(applianceTagclose.classList.contains('fa-chevron-down')){
                 this.closeTag()
-                console.log('close')
             }else{
                 this.openTag()
-               console.log('open')
             }
         })
 
@@ -63,7 +63,7 @@ export default class Appliance{
     }
 
  
-    listOnclick(){
+        listOnclick(){
         const cardWrapper = document.querySelector('.cards')
         const tagItems = document.querySelector('.tag__items')
 
@@ -98,12 +98,12 @@ export default class Appliance{
                         } 
                     })
 
-                    // cardWrapper.innerHTML = ""
-                    // selectedRecipe.forEach(recipe => {
-                    //     const newCard = new Card(recipe)
-                    //     const newCardTemplate = newCard.render()
-                    //     cardWrapper.appendChild(newCardTemplate)
-                    // })
+                    cardWrapper.innerHTML = ""
+                    selectedRecipe.forEach(recipe => {
+                        const newCard = new Card(recipe)
+                        const newCardTemplate = newCard.render()
+                        cardWrapper.appendChild(newCardTemplate)
+                    })
                     
                     // récupérer le tagItem actuel
                     const tagItem = document.querySelector(`.tag__item${tag.instanceId}`)
@@ -117,9 +117,14 @@ export default class Appliance{
                         tagItem.remove()
                         // remettre le texte dans la liste
                         applianceTagList.innerHTML = tagItem.textContent
+                        // renouveler list dans card
+                        
                     })         
                 }
-                console.log('selected recipe: ', selectedRecipe)
+                // console.log('selected recipe: ', selectedRecipe)
+                // let newSelected = new SelectedRecipe(selectedRecipe)
+                // let newSelectedRecipe = newSelected.getSelected()
+                // console.log('newSelectedRecipe: ', newSelectedRecipe)
             })
         })
     }

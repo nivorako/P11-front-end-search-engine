@@ -15,12 +15,12 @@ export default class Search{
         const notFoundWrapper = document.querySelector('.notFound')
         // a chaque pression sur clavier: 
         searchInput.addEventListener('keyup', (e) => {
-           
+            let selectedList = []
             let inputValue = e.target.value
             // si longueur de mot saisi
             if(inputValue.length >= 3){
                 cards.innerHTML = ""
-                let selectedList = []
+                
                 recipes.forEach(recipe => {
                     if(recipe.appliance){
                         if(recipe.appliance.toLowerCase().includes(inputValue.toLowerCase()))
@@ -50,7 +50,7 @@ export default class Search{
                     }
                     if(recipe.description){
                         if(recipe.description.toLowerCase().includes(inputValue.toLowerCase())){
-                            console.log('description: ', recipe.description)
+                            //console.log('description: ', recipe.description)
                             selectedList.push(recipe)
                         }
                     }
@@ -61,6 +61,7 @@ export default class Search{
                     notFound.render()
                     notFoundWrapper.classList.remove('hidden')
                 }else{
+                    console.log('selected list if length !== 0: ', selectedList)
                     // passer selectedlist à new Appliance() 
                     const appliance = new Appliance(selectedList)
                     // et afficher
@@ -86,7 +87,14 @@ export default class Search{
             }
             else{
                 notFoundWrapper.classList.add('hidden')
-                recipes.forEach(recipe => {
+                cards.innerHTML = ""
+                const newAppliance = new Appliance(recipes)
+                newAppliance.render()
+                const newIngredient = new Ingredient(recipes)
+                newIngredient.render()
+                const newUstensil = new Ustensils(recipes)
+                newUstensil.render()
+                recipes.forEach(recipe => { 
                     const card = new Card(recipe)
                     const template = card.render()
                     
