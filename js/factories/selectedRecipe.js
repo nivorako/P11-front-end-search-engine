@@ -7,7 +7,7 @@ export default class SelectedRecipe{
     }
 
     async getSelected(){
-        console.log('this.selected: ', this.selected)
+        
         const recipes = await this.recipesApi.get()
         if(!this.selected){
             return recipes

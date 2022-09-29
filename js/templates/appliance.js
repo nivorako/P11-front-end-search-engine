@@ -1,12 +1,15 @@
 import Tag from "./tag.js";
 import Card from "./card.js";
-import SelectedRecipe from "../factories/selectedRecipe.js";
+import Ingredient from "./ingredient.js";
+import Ustensils from "./ustensils.js";
+import NotFound from "./notFound.js";
 
 
 export default class Appliance{
     constructor(recipes){
         this.applianceWrapper = document.querySelector('.tag__appliance');
         this.recipes = recipes
+        this.recipeDeSecours = recipes
     }
 
     applianceOnClick(){
@@ -63,20 +66,20 @@ export default class Appliance{
     }
 
  
-        listOnclick(){
+    listOnclick(){
         const cardWrapper = document.querySelector('.cards')
         const tagItems = document.querySelector('.tag__items')
 
         // ensemble des listes dans applianceTag
         const applianceTagListItems = document.querySelectorAll('.applianceTag__listItem')
         applianceTagListItems.forEach(applianceTagList => { 
-            const selectedRecipe = []
+            
             // contenu texte de la liste
             const text = applianceTagList.textContent
             
             // sur chaque liste   
             applianceTagList.addEventListener('click', () => { 
-                
+                const selectedRecipe = []
                 // instance Tag()          
                 const tag = new Tag(text)  
                 // si tagItems.childElementCount < 3 ( au départ il est à 0 )
@@ -88,27 +91,48 @@ export default class Appliance{
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu texte de la liste
                     applianceTagList.innerHTML = ""
-
+                   
                     // selectionner recipes selon text
-                    this.recipes.forEach(recipe => {
-                        
+                    this.recipes.forEach(recipe => {                      
                         if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
-                            console.log('text: ', text.toLowerCase())
                             selectedRecipe.push(recipe)
-                        } 
+                        }  
                     })
+                    // si selectedRecipe n'est pas vide
+                    if(selectedRecipe.length > 0){
+                        // affecter selectedRecipe à this.recipe
+                        this.recipes = selectedRecipe
+                        // instancier new Ingredient()
+                        const ingredient = new Ingredient(selectedRecipe)
+                        ingredient.render()
+                        // instancier 
+                        const ustensil = new Ustensils(selectedRecipe)
+                        ustensil.render()
 
-                    cardWrapper.innerHTML = ""
-                    selectedRecipe.forEach(recipe => {
-                        const newCard = new Card(recipe)
-                        const newCardTemplate = newCard.render()
-                        cardWrapper.appendChild(newCardTemplate)
-                    })
+                        const appliance = new Appliance(selectedRecipe)
+                        appliance.render()
+                        // vider contenu cardWrapper
+                        cardWrapper.innerHTML = ""
+
+                        // afficher newCard selon selectedRecipe
+                        this.recipes.forEach(recipe => {
+                            let newCard = new Card(recipe)
+                            let newCardTemplate = newCard.render()
+                            cardWrapper.appendChild(newCardTemplate)
+                        })
+                    }else{
+                         // vider contenu cardWrapper
+                         cardWrapper.innerHTML = ""
+                         const notFound = new NotFound()
+                         cardWrapper.appendChild(notFound.render())
+                    }
                     
                     // récupérer le tagItem actuel
                     const tagItem = document.querySelector(`.tag__item${tag.instanceId}`)
                     // ajouter couleur à tagItem
                     tagItem.classList.add('bg-success')
+
+                    // // Gestion tag close : 
                     //récupérer tagClose actuel
                     const tagClose = document.querySelector(`.tag__itemClose${tag.instanceId}`)
                     // à chaque clic, faire ceci :
@@ -117,8 +141,39 @@ export default class Appliance{
                         tagItem.remove()
                         // remettre le texte dans la liste
                         applianceTagList.innerHTML = tagItem.textContent
-                        // renouveler list dans card
-                        
+
+                        // // renouveler list dans card                   
+                        // récupérer le reste de tag.textContent et refaire la liste à partir de 
+                        console.log('length: ', tagItems.childNodes.length)
+                        if(tagItems.childNodes.length == 0){
+                            cardWrapper.innerHTML = ""
+                            console.log('recipe de secours: ', this.recipeDeSecours)
+                            this.recipeDeSecours.forEach(recipe => {
+                                let newCard = new Card(recipe)
+                                let newCardTemplate = newCard.render()
+                                cardWrapper.appendChild(newCardTemplate)
+                                })
+                            // mettre à jour liste tag
+                            const appliance = new Appliance(this.recipeDeSecours)
+                            appliance.render()
+                        }else{
+                            console.log('selectedRecipe avant! ', selectedRecipe)
+                            tagItems.childNodes.forEach(node => {
+                                console.log('node: ', node.textContent)
+                                this.recipeDeSecours.forEach(recipe => {
+                                    if(recipe.appliance.toLowerCase() === node.textContent.toLowerCase().trim()){
+                                        selectedRecipe.push(recipe)
+                                    }
+                                })
+                            })
+                            console.log('selectedRecipe après! ', selectedRecipe)
+                            cardWrapper.innerHTML = ""
+                            selectedRecipe.forEach(recipe => {
+                                let newCard = new Card(recipe)
+                                let newCardTemplate = newCard.render()
+                                cardWrapper.appendChild(newCardTemplate)
+                                })
+                        }
                     })         
                 }
                 // console.log('selected recipe: ', selectedRecipe)

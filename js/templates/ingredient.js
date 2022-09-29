@@ -1,5 +1,8 @@
 import Tag from "./tag.js"
 import Card from "./card.js"
+import NotFound from "./notFound.js"
+import Ustensils from "./ustensils.js"
+import Appliance from "./appliance.js"
 
 export default class Ingredient{
     constructor(recipes){
@@ -59,17 +62,57 @@ export default class Ingredient{
     }
 
     listOnclick(){
+        const cardWrapper = document.querySelector('.cards')
         const tagItems = document.querySelector('.tag__items')
         const ingredientTagListItems = document.querySelectorAll('.ingredientTag__listItem')
-        ingredientTagListItems.forEach(ingredientTagList => {    
+        // ensemble des listes dans ingredientTag
+        ingredientTagListItems.forEach(ingredientTagList => {   
+            
+            //contenu texte de la liste
+            const text = ingredientTagList.textContent
             ingredientTagList.addEventListener('click', () => {
-                const tag = new Tag(ingredientTagList.textContent)
-                
-                console.log('instanceId: ', tag.instanceId)
-                const tagTemplate = tag.render()
-                tagItems.appendChild(tagTemplate)
-                ingredientTagList.textContent = ""
-                
+                const selectedRecipe = []
+                // instance de Tag()
+                const tag = new Tag(text)
+                // si tagItems.childElementCount < 3 ( au départ il est à 0 )
+                const tagItemsLength = tagItems.childElementCount
+                if(tagItemsLength < 3){
+                    const tagTemplate = tag.render()
+                    tagItems.appendChild(tagTemplate)
+                    ingredientTagList.textContent = ""
+
+                     // selectionner recipes selon text
+                    this.recipes.forEach(recipe => {                      
+                        if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
+                            selectedRecipe.push(recipe)
+                        }  
+                    })
+                    // si selectedRecipe n'est pas vide
+                    if(selectedRecipe.length > 0 ){
+                        // affecter selectedRecipe à this.recipe
+                        this.recipes = selectedRecipe
+                        // instancier new Ingredient()
+                        const appliance = new Appliance(selectedRecipe)
+                        appliance.render()
+                        // instancier 
+                        const ustensil = new Ustensils(selectedRecipe)
+                        ustensil.render()
+
+                        // vider contenu cardWrapper
+                        cardWrapper.innerHTML = ""
+                        // afficher newCard selon selectedRecipe
+                        this.recipes.forEach(recipe => {
+                            let newCard = new Card(recipe)
+                            let newCardTemplate = newCard.render()
+                            cardWrapper.appendChild(newCardTemplate)
+                        })
+                    }else{
+                        // vider contenu cardWrapper
+                        cardWrapper.innerHTML = ""
+                        const notFound = new NotFound()
+                        cardWrapper.appendChild(notFound.render())
+                   }
+                }
             })
         })
         

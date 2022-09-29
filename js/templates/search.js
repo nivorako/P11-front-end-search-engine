@@ -13,8 +13,13 @@ export default class Search{
         const searchInput = document.querySelector('.search__input')
         const cards = document.querySelector('.cards')
         const notFoundWrapper = document.querySelector('.notFound')
+        const tagItems = document.querySelector('.tag__items')
         // a chaque pression sur clavier: 
         searchInput.addEventListener('keyup', (e) => {
+            
+            while(tagItems.firstChild){
+                tagItems.removeChild(tagItems.firstChild)
+            }
             let selectedList = []
             let inputValue = e.target.value
             // si longueur de mot saisi

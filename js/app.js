@@ -1,5 +1,4 @@
 import Api from './api/api.js';
-import SelectedRecipe from './factories/selectedRecipe.js';
 import Ingredient from './templates/ingredient.js';
 import Ustensils from './templates/ustensils.js';
 import Appliance from './templates/appliance.js';
@@ -9,7 +8,7 @@ import Tag from './templates/tag.js';
 
 class App {
     constructor() {
-        //this.recipesApi = new Api("./data/recipes.json");
+        this.recipesApi = new Api("./data/recipes.json");
 
         this.wrapper = document.getElementById('main');
         this.cardWrapper = document.querySelector('.cards');
@@ -18,26 +17,22 @@ class App {
 
     async main() {
 
-        //const recipes = await this.recipesApi.get();
+        const recipes = await this.recipesApi.get();
 
-        const selected = new SelectedRecipe()
-        const getSelect = await selected.getSelected()
-        console.log('getSelected: ', getSelect)
-        const search = new Search();
-      
+        const search = new Search();     
         search.render()
-        search.onSearch(getSelect);
+        search.onSearch(recipes);
 
-        const ingredient = new Ingredient(getSelect);
+        const ingredient = new Ingredient(recipes);
         ingredient.render();
 
-        const ustensil = new Ustensils(getSelect);
+        const ustensil = new Ustensils(recipes);
         ustensil.render();
 
-        const appliance = new Appliance(getSelect);
+        const appliance = new Appliance(recipes);
         appliance.render();
 
-        getSelect.forEach(recipe => {
+        recipes.forEach(recipe => {
             const card = new Card(recipe)
             const template = card.render()
             
