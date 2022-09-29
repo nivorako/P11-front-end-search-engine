@@ -156,6 +156,12 @@ export default class Appliance{
                             // mettre à jour liste tag
                             const appliance = new Appliance(this.recipeDeSecours)
                             appliance.render()
+                             // instancier new Ingredient()
+                            const ingredient = new Ingredient(this.recipeDeSecours)
+                            ingredient.render()
+                            // instancier 
+                            const ustensil = new Ustensils(this.recipeDeSecours)
+                            ustensil.render()
                         }else{
                             console.log('selectedRecipe avant! ', selectedRecipe)
                             tagItems.childNodes.forEach(node => {
