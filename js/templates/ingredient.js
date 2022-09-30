@@ -1,3 +1,4 @@
+import Api from "../api/api.js"
 import Tag from "./tag.js"
 import Card from "./card.js"
 import NotFound from "./notFound.js"
@@ -7,8 +8,8 @@ import Appliance from "./appliance.js"
 export default class Ingredient{
     constructor(recipes){
         this.ingredientWrapper = document.querySelector('.tag__ingredients')
+        this.recipesApi = new Api("./data/recipes.json");
         this.recipes = recipes
-        this.totalRecipes = recipes
     }
 
     ingredientOnClick(){
@@ -62,14 +63,14 @@ export default class Ingredient{
         ingredientTagclose.classList.remove('fa-chevron-down')
     }
 
-    listOnclick(){
-        const totalRecipes = this.recipes
+    async listOnclick(){
+        const totalRecipes = await this.recipesApi.get();
         const cardWrapper = document.querySelector('.cards')
         const tagItems = document.querySelector('.tag__items')
         const ingredientTagListItems = document.querySelectorAll('.ingredientTag__listItem')
         // ensemble des listes dans ingredientTag
         ingredientTagListItems.forEach(ingredientTagList => {   
-            
+        
             //contenu texte de la liste
             const text = ingredientTagList.textContent
             ingredientTagList.addEventListener('click', () => {
@@ -88,6 +89,7 @@ export default class Ingredient{
                     ingredientTagList.innerHTML = ""
                     
                      // selectionner recipes selon text
+                    console.log('this.recipes à l origine: ', this.recipes)
                     this.recipes.forEach(recipe => {   
                         recipe.ingredients.forEach(ingredient => {
                             if(ingredient.ingredient.toLowerCase() === text.toLowerCase().trim()){
@@ -170,11 +172,18 @@ export default class Ingredient{
                                             selectedRecipe.push(recipe)
                                         }
                                     }) 
-                                    // if(recipe.appliance.toLowerCase() === node.textContent.toLowerCase().trim()){
-                                    //     selectedRecipe.push(recipe)
-                                    // }
                                 })
                             })
+                              // mettre à jour liste tag
+                              const appliance = new Appliance(selectedRecipe)
+                              console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
+                              appliance.render()
+                               // instancier new Ingredient()
+                              const ingredient = new Ingredient(selectedRecipe)
+                              ingredient.render()
+                              // instancier 
+                              const ustensil = new Ustensils(selectedRecipe)
+                              ustensil.render()
                             console.log('selectedRecipe après! ', selectedRecipe)
                             cardWrapper.innerHTML = ""
                             selectedRecipe.forEach(recipe => {
@@ -191,18 +200,27 @@ export default class Ingredient{
     }
     //parametre liste mise a jour
     listItems(){
+        let ingredCount = 0
+        let select = 0
         let listHTML = ""
         let ingredientTab = []
         this.recipes.forEach(recipe => {
+            // pour chaque recipe
             const length = Object.entries(recipe).length
             for(let i= 0; i < length; i++){
+                // si Object.keys(recipe)[i] est ingredients
                 if((Object.keys(recipe)[i] === "ingredients") ){
+                    //console.log('Object.values(recipe)[i]: ', Object.values(recipe)[i])
+                    // pour chaque ingredient
                     const ingredientLength = Object.values(recipe)[i].length
                     for(let j = 0; j < ingredientLength; j++){
-                        
+                        ingredCount++
+                        //console.log('Object.values(recipe)[i][j].ingredient: ', Object.values(recipe)[i][j].ingredient)
+                        // si ingredientTab ne contient pas ingredient
                         if(!ingredientTab.includes(Object.values(recipe)[i][j].ingredient)){
+                            select++
                             ingredientTab.push(Object.values(recipe)[i][j].ingredient)
-                            
+                           
                             listHTML += `
                                     <li class="ingredientTag__listItem col-4"> ${Object.values(recipe)[i][j].ingredient} </li>
                             `;
@@ -211,7 +229,14 @@ export default class Ingredient{
                 }
             }
         })
-        
+        console.log('ingred: ', ingredCount)
+        console.log('select: ', select)
+        console.log('ingredientTab: ', ingredientTab.sort())
+        ingredientTab.sort().forEach(ingredient => {
+            listHTML += `
+                <li class="ingredientTag__listItem col-4"> ${ingredient} </li>  
+            `;
+        })
         return listHTML;
     }
 
