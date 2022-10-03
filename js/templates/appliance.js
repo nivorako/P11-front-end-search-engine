@@ -10,6 +10,7 @@ export default class Appliance{
         this.applianceWrapper = document.querySelector('.tag__appliance');
         this.recipes = recipes
         this.recipeDeSecours = recipes
+        console.log('this.recipe dans appliance: ', this.recipes)
     }
 
     applianceOnClick(){
@@ -76,28 +77,38 @@ export default class Appliance{
             
             // contenu texte de la liste
             const text = applianceTagList.textContent
-            
+        
             // sur chaque liste   
             applianceTagList.addEventListener('click', () => { 
+               
                 const selectedRecipe = []
                 // instance Tag()          
                 const tag = new Tag(text)  
                 // si tagItems.childElementCount < 3 ( au départ il est à 0 )
+                // && (tagItems.childNodes.every(checkTagItemsValue))
+                console.log('tagItems.childNodes: ', tagItems.childNodes)
                 const tagItemsLength = tagItems.childElementCount
-                if(tagItemsLength < 3){
+                // vérifie si la valeur choisie n'est pas déjà affiché
+                const checkTagItemsValue = (node) => {  
+                    
+                    return node.textContent.toLowerCase().trim() !== text.toLowerCase().trim()
+                }
+                // vérifie si les elts tag ne dépasse pas le nbre 3 ET la valeur choisie n'est pas déjà affiché
+                if((tagItemsLength < 3) && Array.from(tagItems.childNodes).every(checkTagItemsValue)){
                      // appliquer render() à tag
                     const tagTemplate = tag.render()
                     // le placer dans tagItems
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu texte de la liste
                     applianceTagList.innerHTML = ""
-                   
+                    console.log('this.recipes dans appliance: ', this.recipes)
                     // selectionner recipes selon text
                     this.recipes.forEach(recipe => {                      
                         if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
                             selectedRecipe.push(recipe)
                         }  
                     })
+                    console.log('selectedRecipe dans appliance: ', selectedRecipe)
                     // si selectedRecipe n'est pas vide
                     if(selectedRecipe.length > 0){
                         // affecter selectedRecipe à this.recipe
@@ -144,7 +155,7 @@ export default class Appliance{
 
                         // // renouveler list dans card                   
                         // récupérer le reste de tag.textContent et refaire la liste à partir de 
-                        console.log('length: ', tagItems.childNodes.length)
+                        // console.log('length: ', tagItems.childNodes.length)
                         if(tagItems.childNodes.length == 0){
                             cardWrapper.innerHTML = ""
                             console.log('recipe de secours: ', this.recipeDeSecours)
@@ -165,14 +176,14 @@ export default class Appliance{
                         }else{
                             console.log('selectedRecipe avant! ', selectedRecipe)
                             tagItems.childNodes.forEach(node => {
-                                console.log('node: ', node.textContent)
+                                // console.log('node: ', node.textContent)
                                 this.recipeDeSecours.forEach(recipe => {
                                     if(recipe.appliance.toLowerCase() === node.textContent.toLowerCase().trim()){
                                         selectedRecipe.push(recipe)
                                     }
                                 })
                             })
-                            console.log('selectedRecipe après! ', selectedRecipe)
+                            // console.log('selectedRecipe après! ', selectedRecipe)
                             cardWrapper.innerHTML = ""
                             selectedRecipe.forEach(recipe => {
                                 let newCard = new Card(recipe)
@@ -182,10 +193,6 @@ export default class Appliance{
                         }
                     })         
                 }
-                // console.log('selected recipe: ', selectedRecipe)
-                // let newSelected = new SelectedRecipe(selectedRecipe)
-                // let newSelectedRecipe = newSelected.getSelected()
-                // console.log('newSelectedRecipe: ', newSelectedRecipe)
             })
         })
     }

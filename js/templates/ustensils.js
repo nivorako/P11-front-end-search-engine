@@ -1,4 +1,8 @@
 import Tag from "./tag.js";
+import Card from "./card.js";
+import Ingredient from "./ingredient.js";
+import Appliance from "./appliance.js";
+import NotFound from "./notFound.js";
 
 
 export default class Ustensils {
@@ -61,24 +65,61 @@ export default class Ustensils {
     }
 
     listOnclick(){
+        const cardWrapper = document.querySelector('.cards')
         const tagItems = document.querySelector('.tag__items')
         // selectionne les listes dans ustensilTag__listItem
-        const applianceTagListItems = document.querySelectorAll('.ustensilTag__listItem')
-        applianceTagListItems.forEach(list => {   
-            // a chaque clic sur une liste:  
-            list.addEventListener('click', () => {
-                // // donner le textContent à new Tag() 
-                // const tag = new Tag(list.textContent)
-                // // si instance new Tag() < 3 
-                // if(tag.instanceId < 4){
-                //     const tagTemplate = tag.render()
-                //     // et insérer chaque tagTemplate dans tagItems
-                //     tagItems.appendChild(tagTemplate)
-                //     // supprimer le content de la liste dans ustensilTag__listItem
-                //     list.textContent = ""
-                // }
-            })
-        })
+        const ustensilTagListItems = document.querySelectorAll('.ustensilTag__listItem')
+        // ustensilTagListItems.forEach(ustensilTagList => {  
+        //     const text = ustensilTagList.textContent 
+        //     // a chaque clic sur une liste:  
+        //     ustensilTagList.addEventListener('click', () => {
+        //         const selectedRecipe = []
+        //         // donner le textContent à new Tag() 
+        //         const tag = new Tag(text)
+        //         // si instance new Tag() < 3 
+        //          // si tagItems.childElementCount < 3 ( au départ il est à 0 )
+        //          const tagItemsLength = tagItems.childElementCount
+        //         if(tagItemsLength < 3){
+        //             const tagTemplate = tag.render()
+        //             // et insérer chaque tagTemplate dans tagItems
+        //             tagItems.appendChild(tagTemplate)
+        //             // supprimer le content de la liste dans ustensilTag__listItem
+        //             ustensilTagList.textContent = ""
+
+        //             // selectionner recipes selon text
+        //             this.recipes.forEach(recipe => {
+        //                 recipe.ustensils.forEach(ustensil => {
+        //                     if(ustensil.toLowerCase() === text.toLowerCase().trim()){
+        //                         selectedRecipe.push(recipe)
+        //                     }
+        //                 })                       
+        //             })
+        //              // si selectedRecipe n'est pas vide
+        //              if(selectedRecipe.length > 0){
+        //                 // affecter selectedRecipe à this.recipe
+        //                 this.recipes = selectedRecipe
+        //                 // instancier new Ingredient()
+        //                 const ingredient = new Ingredient(selectedRecipe)
+        //                 ingredient.render()
+        //                 // instancier 
+        //                 const ustensil = new Ustensils(selectedRecipe)
+        //                 ustensil.render()
+
+        //                 const appliance = new Appliance(selectedRecipe)
+        //                 appliance.render()
+        //                 // vider contenu cardWrapper
+        //                 cardWrapper.innerHTML = ""
+
+        //                 // afficher newCard selon selectedRecipe
+        //                 this.recipes.forEach(recipe => {
+        //                     let newCard = new Card(recipe)
+        //                     let newCardTemplate = newCard.render()
+        //                     cardWrapper.appendChild(newCardTemplate)
+        //                 })
+        //             }
+        //         }
+        //     })
+        // })
         
     }
 

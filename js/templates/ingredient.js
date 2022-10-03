@@ -4,12 +4,14 @@ import Card from "./card.js"
 import NotFound from "./notFound.js"
 import Ustensils from "./ustensils.js"
 import Appliance from "./appliance.js"
+import { removeAccents } from "../utilities/removeAccent.js"
 
 export default class Ingredient{
     constructor(recipes){
         this.ingredientWrapper = document.querySelector('.tag__ingredients')
         this.recipesApi = new Api("./data/recipes.json");
         this.recipes = recipes
+        console.log('this.recipes dans ingredient: ', this.recipes)
     }
 
     ingredientOnClick(){
@@ -74,25 +76,33 @@ export default class Ingredient{
             //contenu texte de la liste
             const text = ingredientTagList.textContent
             ingredientTagList.addEventListener('click', () => {
+                console.log('text: ', text)
                 const selectedRecipe = []
                 // instance de Tag()
                 const tag = new Tag(text)
                 // si tagItems.childElementCount < 3 ( au départ il est à 0 )
                 const tagItemsLength = tagItems.childElementCount
-                if(tagItemsLength < 3){
+                // vérifie si la valeur choisie n'est pas déjà affiché
+                const checkTagItemsValue = (node) => {  
+                    
+                    return node.textContent.toLowerCase().trim() !== text.toLowerCase().trim()
+                }
+                // vérifie que tag items ne dépasse pas 3 elts ET la valeur choisie n'est pas déjà affichée
+                if((tagItemsLength < 3) && Array.from(tagItems.childNodes).every(checkTagItemsValue)){
+                    
                     // alors :
                     const tagTemplate = tag.render()
                     // insérer tagTemplate dans tagItems
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu text de ingredientTagList
-                    console.log('ingredientTagList.textContent: ', ingredientTagList.textContent)
+                    // console.log('ingredientTagList.textContent: ', ingredientTagList.textContent)
                     ingredientTagList.innerHTML = ""
                     
                      // selectionner recipes selon text
-                    console.log('this.recipes à l origine: ', this.recipes)
+                    // console.log('this.recipes à l origine: ', this.recipes)
                     this.recipes.forEach(recipe => {   
                         recipe.ingredients.forEach(ingredient => {
-                            if(ingredient.ingredient.toLowerCase() === text.toLowerCase().trim()){
+                            if(removeAccents(ingredient.ingredient.toLowerCase().trim()) === removeAccents(text.toLowerCase().trim())){
                                 selectedRecipe.push(recipe)
                             }
                         })                    
@@ -141,11 +151,10 @@ export default class Ingredient{
 
                         // // renouveler list dans card                   
                         // récupérer le reste de tag.textContent et refaire la liste à partir de 
-                        console.log('length: ', tagItems.childNodes.length)
                         // si il ne reste que un seul enfant de tagItems
                         if(tagItems.childNodes.length == 0){
                             cardWrapper.innerHTML = ""
-                            console.log('recipe de secours: ', totalRecipes)
+                            // console.log('recipe de secours: ', totalRecipes)
                             totalRecipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
                                 let newCardTemplate = newCard.render()
@@ -162,31 +171,40 @@ export default class Ingredient{
                             ustensil.render()
                         // sinon
                         }else{
-                            console.log('selectedRecipe avant! ', selectedRecipe)
+                            
                             // sur chaque tag
+                            //if(tagItems.childnodes.classList.contains(bg-primary)){selectionner this.recipesApi selon bg-primary}
+                            // sinon .... 
+                            const selectedRecipes = []
+                            console.log('selectedRecipe dans close debut: ', selectedRecipes)
+                            console.log('tagItems.childNodes: ', tagItems.childNodes)
                             tagItems.childNodes.forEach(node => {
-                                console.log('node: ', node.textContent)
-                                totalRecipes.forEach(recipe => {
+                                // traiter selon ingredient
+                                console.log('yess-primary')
+                                console.log('texte node: ', node.textContent)
+                                totalRecipes.forEach(recipe => {   
                                     recipe.ingredients.forEach(ingredient => {
-                                        if(ingredient.ingredient.toLowerCase() === text.toLowerCase().trim()){
-                                            selectedRecipe.push(recipe)
+                                        if(removeAccents(ingredient.ingredient.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
+                                            selectedRecipes.push(recipe)
                                         }
-                                    }) 
+                                    })                    
                                 })
+                                console.log('selected dans primary: ', selectedRecipes)
                             })
-                              // mettre à jour liste tag
-                              const appliance = new Appliance(selectedRecipe)
-                              console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
-                              appliance.render()
-                               // instancier new Ingredient()
-                              const ingredient = new Ingredient(selectedRecipe)
-                              ingredient.render()
-                              // instancier 
-                              const ustensil = new Ustensils(selectedRecipe)
-                              ustensil.render()
-                            console.log('selectedRecipe après! ', selectedRecipe)
+                           
+                            // mettre à jour liste tag
+                            const appliance = new Appliance(selectedRecipes)
+                            // console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
+                            appliance.render()
+                            // instancier new Ingredient()
+                            const ingredient = new Ingredient(selectedRecipes)
+                            ingredient.render()
+                            // instancier 
+                            const ustensil = new Ustensils(selectedRecipes)
+                            ustensil.render()
+                            // console.log('selectedRecipe après! ', selectedRecipe)
                             cardWrapper.innerHTML = ""
-                            selectedRecipe.forEach(recipe => {
+                            selectedRecipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
                                 let newCardTemplate = newCard.render()
                                 cardWrapper.appendChild(newCardTemplate)
@@ -204,6 +222,7 @@ export default class Ingredient{
         let select = 0
         let listHTML = ""
         let ingredientTab = []
+
         this.recipes.forEach(recipe => {
             // pour chaque recipe
             const length = Object.entries(recipe).length
@@ -215,23 +234,16 @@ export default class Ingredient{
                     const ingredientLength = Object.values(recipe)[i].length
                     for(let j = 0; j < ingredientLength; j++){
                         ingredCount++
-                        //console.log('Object.values(recipe)[i][j].ingredient: ', Object.values(recipe)[i][j].ingredient)
                         // si ingredientTab ne contient pas ingredient
-                        if(!ingredientTab.includes(Object.values(recipe)[i][j].ingredient)){
+                        if(!ingredientTab.includes(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))){
                             select++
-                            ingredientTab.push(Object.values(recipe)[i][j].ingredient)
-                           
-                            listHTML += `
-                                    <li class="ingredientTag__listItem col-4"> ${Object.values(recipe)[i][j].ingredient} </li>
-                            `;
+                            ingredientTab.push(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))
                         }
                     }
                 }
             }
         })
-        console.log('ingred: ', ingredCount)
-        console.log('select: ', select)
-        console.log('ingredientTab: ', ingredientTab.sort())
+        
         ingredientTab.sort().forEach(ingredient => {
             listHTML += `
                 <li class="ingredientTag__listItem col-4"> ${ingredient} </li>  

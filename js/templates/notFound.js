@@ -10,7 +10,6 @@ export default class NotFound{
        
         `;
 
-        console.log('not found.render()')
         this.card.innerHTML = notFound
         return this.card
     }
