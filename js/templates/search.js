@@ -3,6 +3,7 @@ import NotFound from "./notFound.js"
 import Appliance from "./appliance.js"
 import Ingredient from "./ingredient.js"
 import Ustensils from "./ustensils.js"
+import { removeAccents } from "../utilities/removeAccent.js"
 
 export default class Search{
     constructor () {
@@ -16,7 +17,7 @@ export default class Search{
         const tagItems = document.querySelector('.tag__items')
         // a chaque pression sur clavier: 
         searchInput.addEventListener('keyup', (e) => {
-            
+            // vider les tag
             while(tagItems.firstChild){
                 tagItems.removeChild(tagItems.firstChild)
             }
@@ -28,61 +29,67 @@ export default class Search{
                 
                 recipes.forEach(recipe => {
                     if(recipe.appliance){
-                        if(recipe.appliance.toLowerCase().includes(inputValue.toLowerCase()))
+                        if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
                         selectedList.push(recipe)
                     } 
                     if(recipe.ingredients){
                         const ingredientLength = recipe.ingredients.length
                         for(let i=0; i<ingredientLength; i++){
                             
-                            if(recipe.ingredients[i].ingredient.toLowerCase().includes(inputValue.toLowerCase()))
+                            if(removeAccents(recipe.ingredients[i].ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim())))
                             selectedList.push(recipe)
                         }
                     }
                     if(recipe.ustensils){
                         const ustensilLength = recipe.ustensils.length
                         for(let j=0; j<ustensilLength; j++){
-                            if(recipe.ustensils[j].toLowerCase().includes(inputValue.toLowerCase())){
-                                console.log('ustensil: ', recipe.ustensils[j])
+                            if(removeAccents(recipe.ustensils[j].toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                                 selectedList.push(recipe)
                             }
                         }
                     }
                     if(recipe.name){
-                        if(recipe.name.toLowerCase().includes(inputValue.toLowerCase())){
+                        if(removeAccents(recipe.name.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             selectedList.push(recipe)
                         }
                     }
                     if(recipe.description){
-                        if(recipe.description.toLowerCase().includes(inputValue.toLowerCase())){
+                        if(removeAccents(recipe.description.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             //console.log('description: ', recipe.description)
                             selectedList.push(recipe)
                         }
                     }
+                    
+                })
+                const filteredList  = []
+                const selectedListLength = selectedList.length
+                selectedList.forEach(list => {
+                    if(!filteredList.includes(list)){
+                        filteredList.push(list)
+                    }
                 })
                 // si la liste est vide
-                if(selectedList.length === 0){
+                if(filteredList.length === 0){
                     const notFound = new NotFound()
                     notFound.render()
                     notFoundWrapper.classList.remove('hidden')
                 }else{
-                    console.log('selected list if length !== 0: ', selectedList)
                     // passer selectedlist à new Appliance() 
-                    const appliance = new Appliance(selectedList)
+                    const appliance = new Appliance(filteredList)
                     // et afficher
                     appliance.render()
                     // pareil pour ingredient
-                    const ingredient = new Ingredient(selectedList)
+                    const ingredient = new Ingredient(filteredList)
                     ingredient.render()
                     //et ustensils
-                    const ustensil = new Ustensils(selectedList)
+                    const ustensil = new Ustensils(filteredList)
                     ustensil.render()
 
                     // supprimer la page not found
                     notFoundWrapper.classList.add('hidden')
 
                     // donner chaque list de selectedList à newcard pour afficher dans cards
-                    selectedList.forEach(selected => {
+                    filteredList.forEach(selected => {
                         const newCard = new Card(selected)
                         const newCardTemplate = newCard.render()
                         cards.appendChild(newCardTemplate)

@@ -3,14 +3,17 @@ import Card from "./card.js";
 import Ingredient from "./ingredient.js";
 import Ustensils from "./ustensils.js";
 import NotFound from "./notFound.js";
+import Api from "../api/api.js";
+import { removeAccents } from "../utilities/removeAccent.js";
 
 
 export default class Appliance{
     constructor(recipes){
         this.applianceWrapper = document.querySelector('.tag__appliance');
+        this.recipesApi = new Api("./data/recipes.json");
         this.recipes = recipes
         this.recipeDeSecours = recipes
-        console.log('this.recipe dans appliance: ', this.recipes)
+        //console.log('this.recipe dans appliance: ', this.recipes)
     }
 
     applianceOnClick(){
@@ -67,7 +70,8 @@ export default class Appliance{
     }
 
  
-    listOnclick(){
+    async listOnclick(){
+        const totalRecipes = await this.recipesApi.get();
         const cardWrapper = document.querySelector('.cards')
         const tagItems = document.querySelector('.tag__items')
 
@@ -86,12 +90,12 @@ export default class Appliance{
                 const tag = new Tag(text)  
                 // si tagItems.childElementCount < 3 ( au départ il est à 0 )
                 // && (tagItems.childNodes.every(checkTagItemsValue))
-                console.log('tagItems.childNodes: ', tagItems.childNodes)
+               
                 const tagItemsLength = tagItems.childElementCount
                 // vérifie si la valeur choisie n'est pas déjà affiché
                 const checkTagItemsValue = (node) => {  
                     
-                    return node.textContent.toLowerCase().trim() !== text.toLowerCase().trim()
+                    return removeAccents(node.textContent.toLowerCase().trim()) !== removeAccents(text.toLowerCase().trim())
                 }
                 // vérifie si les elts tag ne dépasse pas le nbre 3 ET la valeur choisie n'est pas déjà affiché
                 if((tagItemsLength < 3) && Array.from(tagItems.childNodes).every(checkTagItemsValue)){
@@ -101,14 +105,14 @@ export default class Appliance{
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu texte de la liste
                     applianceTagList.innerHTML = ""
-                    console.log('this.recipes dans appliance: ', this.recipes)
+                    console.log('this.recipes dans appliance avant: ', this.recipes)
                     // selectionner recipes selon text
                     this.recipes.forEach(recipe => {                      
-                        if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
+                        if(removeAccents(recipe.appliance.toLowerCase()) === removeAccents(text.toLowerCase().trim())){
                             selectedRecipe.push(recipe)
                         }  
                     })
-                    console.log('selectedRecipe dans appliance: ', selectedRecipe)
+                    console.log('this.recipes dans appliance après: ', this.recipes)
                     // si selectedRecipe n'est pas vide
                     if(selectedRecipe.length > 0){
                         // affecter selectedRecipe à this.recipe
@@ -158,34 +162,46 @@ export default class Appliance{
                         // console.log('length: ', tagItems.childNodes.length)
                         if(tagItems.childNodes.length == 0){
                             cardWrapper.innerHTML = ""
-                            console.log('recipe de secours: ', this.recipeDeSecours)
-                            this.recipeDeSecours.forEach(recipe => {
+                           
+                            totalRecipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
                                 let newCardTemplate = newCard.render()
                                 cardWrapper.appendChild(newCardTemplate)
                                 })
                             // mettre à jour liste tag
-                            const appliance = new Appliance(this.recipeDeSecours)
+                            const appliance = new Appliance(totalRecipes)
                             appliance.render()
                              // instancier new Ingredient()
-                            const ingredient = new Ingredient(this.recipeDeSecours)
+                            const ingredient = new Ingredient(totalRecipes)
                             ingredient.render()
                             // instancier 
-                            const ustensil = new Ustensils(this.recipeDeSecours)
+                            const ustensil = new Ustensils(totalRecipes)
                             ustensil.render()
                         }else{
                             console.log('selectedRecipe avant! ', selectedRecipe)
-                            tagItems.childNodes.forEach(node => {
-                                // console.log('node: ', node.textContent)
-                                this.recipeDeSecours.forEach(recipe => {
-                                    if(recipe.appliance.toLowerCase() === node.textContent.toLowerCase().trim()){
-                                        selectedRecipe.push(recipe)
-                                    }
-                                })
+                            const selectedRecipes = []
+                            tagItems.childNodes.forEach(node => {                               
+                                if(node.classList.contains('bg-success')){
+                                    totalRecipes.forEach(recipe => {
+                                        if(removeAccents(ecipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
+                                            selectedRecipes.push(recipe)
+                                        }
+                                    })
+                                }
+                                if(node.classList.contains('bg-primary')){
+                                    totalRecipes.forEach(recipe => {   
+                                        recipe.ingredients.forEach(ingredient => {
+                                            if(removeAccents(ingredient.ingredient.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
+                                                selectedRecipes.push(recipe)
+                                            }
+                                        })                    
+                                    })
+                                }
+                                
                             })
-                            // console.log('selectedRecipe après! ', selectedRecipe)
+                            console.log('selectedRecipe après! ', selectedRecipes)
                             cardWrapper.innerHTML = ""
-                            selectedRecipe.forEach(recipe => {
+                            selectedRecipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
                                 let newCardTemplate = newCard.render()
                                 cardWrapper.appendChild(newCardTemplate)
