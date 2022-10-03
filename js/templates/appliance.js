@@ -183,7 +183,7 @@ export default class Appliance{
                             tagItems.childNodes.forEach(node => {                               
                                 if(node.classList.contains('bg-success')){
                                     totalRecipes.forEach(recipe => {
-                                        if(removeAccents(ecipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
+                                        if(removeAccents(recipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
                                             selectedRecipes.push(recipe)
                                         }
                                     })
@@ -197,7 +197,16 @@ export default class Appliance{
                                         })                    
                                     })
                                 }
-                                
+                                if(node.classList.contains('bg-danger')){
+                                    totalRecipes.forEach(recipe => {
+                                        
+                                        recipe.ustensils.forEach(elt => {
+                                            if(removeAccents(elt.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
+                                                selectedRecipes.push(recipe)
+                                            }
+                                        })
+                                    })
+                                }
                             })
                             console.log('selectedRecipe après! ', selectedRecipes)
                             cardWrapper.innerHTML = ""

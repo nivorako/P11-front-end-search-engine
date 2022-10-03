@@ -61,6 +61,7 @@ export default class Search{
                     }
                     
                 })
+                // éviter doublons dans selectedList
                 const filteredList  = []
                 const selectedListLength = selectedList.length
                 selectedList.forEach(list => {

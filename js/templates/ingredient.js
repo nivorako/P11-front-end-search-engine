@@ -199,6 +199,16 @@ export default class Ingredient{
                                         })                    
                                     })
                                 }
+                                if(node.classList.contains('bg-danger')){
+                                    totalRecipes.forEach(recipe => {
+                                        
+                                        recipe.ustensils.forEach(elt => {
+                                            if(removeAccents(elt.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
+                                                selectedRecipes.push(recipe)
+                                            }
+                                        })
+                                    })
+                                }
                             })
                             console.log('selectedRecipe: ', selectedRecipes)
                             // mettre à jour liste tag
@@ -217,7 +227,7 @@ export default class Ingredient{
                                 let newCard = new Card(recipe)
                                 let newCardTemplate = newCard.render()
                                 cardWrapper.appendChild(newCardTemplate)
-                                })
+                            })
                         }
                     })         
                 }
