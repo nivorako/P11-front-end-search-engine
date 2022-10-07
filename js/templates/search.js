@@ -22,9 +22,11 @@ export default class Search{
                 tagItems.removeChild(tagItems.firstChild)
             }
             let selectedList = []
+            //pour js bench.me  donner valeur en dur a input value
             let inputValue = e.target.value
             // si longueur de mot saisi
             if(inputValue.length >= 3){
+                // à commenter por js B
                 cards.innerHTML = ""
                 
                 recipes.forEach(recipe => {
@@ -91,6 +93,7 @@ export default class Search{
 
                     // donner chaque list de selectedList à newcard pour afficher dans cards
                     filteredList.forEach(selected => {
+                        // à commenter pour jsB
                         const newCard = new Card(selected)
                         const newCardTemplate = newCard.render()
                         cards.appendChild(newCardTemplate)

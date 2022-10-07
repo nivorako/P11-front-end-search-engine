@@ -18,7 +18,7 @@ export default class Ustensils {
       
         
         ustensilTagclose.addEventListener('click', (e) => {
-            if(ustensilTagclose.classList.contains('fa-chevron-down')){
+            if(ustensilTagclose.classList.contains('fa-chevron-up')){
                 this.closeTag()
             }else{
                 this.openTag()
@@ -45,8 +45,8 @@ export default class Ustensils {
         ustensilTagInput.classList.remove('hidden')
         ustensilTagList.classList.remove('hidden')  
 
-        ustensilTagclose.classList.remove('fa-chevron-up')
-        ustensilTagclose.classList.add('fa-chevron-down')
+        ustensilTagclose.classList.remove('fa-chevron-down')
+        ustensilTagclose.classList.add('fa-chevron-up')
     }
 
     closeTag(){
@@ -62,8 +62,8 @@ export default class Ustensils {
         ustensilTagInput.classList.add('hidden')
         ustensilTagList.classList.add('hidden')  
 
-        ustensilTagclose.classList.add('fa-chevron-up')
-        ustensilTagclose.classList.remove('fa-chevron-down')
+        ustensilTagclose.classList.add('fa-chevron-down')
+        ustensilTagclose.classList.remove('fa-chevron-up')
     }
 
     async listOnclick(){
@@ -172,11 +172,11 @@ export default class Ustensils {
                             //if(tagItems.childnodes.classList.contains(bg-primary)){selectionner this.recipesApi selon bg-primary}
                             // sinon .... 
                             const selectedRecipes = []
+                            // créer trois tab
                            
                             tagItems.childNodes.forEach(node => {
                                 // traiter selon ingredient
-                                console.log('node: ', node.textContent)
-                                console.log('node class: ', node.classList)
+                                
                                 if(node.classList.contains('bg-success')){
                                     totalRecipes.forEach(recipe => {
                                         // if(removeAccents(recipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
@@ -204,8 +204,12 @@ export default class Ustensils {
                                         })
                                     })
                                 }
+
+                                // utiliser find
+                                //const found = array1.find(element => element.includes(array2));
+                                //const found2 = 
                             })
-                            console.log('selectedRecipe: ', selectedRecipes)
+                            console.log('selectedRecipes après close: ', selectedRecipes)
                             // mettre à jour liste tag
                             const appliance = new Appliance(selectedRecipes)
                             // console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
@@ -257,9 +261,9 @@ export default class Ustensils {
     render(){
         const ustensil = /*html*/ `
         <div class="ustensilTag__btn  bg-danger" > 
-            <h2 class="ustensilTag__title text-center">Ustensils</h2>
+            <h2 class="ustensilTag__title text-center">Ustensiles</h2>
             <input class="ustensilTag__input hidden" type="text" placeholder="rechercher un ustensil"> 
-            <i class="fas fa-chevron-up ustensilTag__close"></i> 
+            <i class="fas fa-chevron-down ustensilTag__close"></i> 
         </div>
         <div class="ustensilTag__list hidden bg-danger p-3">            
             <ul class="ustensilTag__listItems row bg-danger">

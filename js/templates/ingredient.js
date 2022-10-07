@@ -17,7 +17,7 @@ export default class Ingredient{
     ingredientOnClick(){
         const ingredientTagClose = document.querySelector(".ingredientTag__close")
         ingredientTagClose.addEventListener('click', (e) => {
-            if(ingredientTagClose.classList.contains('fa-chevron-down')){
+            if(ingredientTagClose.classList.contains('fa-chevron-up')){
                 this.closeTag()
             }else{
                 this.openTag()
@@ -44,8 +44,8 @@ export default class Ingredient{
         ingredientTagInput.classList.remove('hidden')
         ingredientTagList.classList.remove('hidden')  
 
-        ingredientTagclose.classList.remove('fa-chevron-up')
-        ingredientTagclose.classList.add('fa-chevron-down')
+        ingredientTagclose.classList.remove('fa-chevron-down')
+        ingredientTagclose.classList.add('fa-chevron-up')
     }
 
     closeTag(){
@@ -61,8 +61,8 @@ export default class Ingredient{
         ingredientTagInput.classList.add('hidden')
         ingredientTagList.classList.add('hidden')  
 
-        ingredientTagclose.classList.add('fa-chevron-up')
-        ingredientTagclose.classList.remove('fa-chevron-down')
+        ingredientTagclose.classList.add('fa-chevron-down')
+        ingredientTagclose.classList.remove('fa-chevron-up')
     }
 
     async listOnclick(){
@@ -210,7 +210,7 @@ export default class Ingredient{
                                     })
                                 }
                             })
-                            console.log('selectedRecipe: ', selectedRecipes)
+                            console.log('selectedRecipes après close : ', selectedRecipes)
                             // mettre à jour liste tag
                             const appliance = new Appliance(selectedRecipes)
                             // console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
@@ -274,9 +274,9 @@ export default class Ingredient{
     render(){
         const ingredientTag = /*html*/ `
             <div class="ingredientTag__btn  bg-primary" > 
-                <h2 class="ingredientTag__title text-center">ingredients</h2>
+                <h2 class="ingredientTag__title text-center">Ingredients</h2>
                 <input class="ingredientTag__input hidden" type="text" placeholder="rechercher un ingredient"> 
-                <i class="fas fa-chevron-up ingredientTag__close"></i> 
+                <i class="fas fa-chevron-down ingredientTag__close"></i> 
             </div>
             <div class="ingredientTag__list hidden bg-primary p-3">        
                 <ul class="ingredientTag__listItems row bg-primary">

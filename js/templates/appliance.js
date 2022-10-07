@@ -21,7 +21,7 @@ export default class Appliance{
       
         
         applianceTagclose.addEventListener('click', (e) => {
-            if(applianceTagclose.classList.contains('fa-chevron-down')){
+            if(applianceTagclose.classList.contains('fa-chevron-up')){
                 this.closeTag()
             }else{
                 this.openTag()
@@ -48,8 +48,8 @@ export default class Appliance{
         applianceTagInput.classList.remove('hidden')
         applianceTagList.classList.remove('hidden')  
 
-        applianceTagclose.classList.remove('fa-chevron-up')
-        applianceTagclose.classList.add('fa-chevron-down')
+        applianceTagclose.classList.remove('fa-chevron-down')
+        applianceTagclose.classList.add('fa-chevron-up')
     }
 
     closeTag(){
@@ -65,8 +65,8 @@ export default class Appliance{
         applianceTagInput.classList.add('hidden')
         applianceTagList.classList.add('hidden')  
 
-        applianceTagclose.classList.add('fa-chevron-up')
-        applianceTagclose.classList.remove('fa-chevron-down')
+        applianceTagclose.classList.add('fa-chevron-down')
+        applianceTagclose.classList.remove('fa-chevron-up')
     }
 
  
@@ -105,14 +105,14 @@ export default class Appliance{
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu texte de la liste
                     applianceTagList.innerHTML = ""
-                    console.log('this.recipes dans appliance avant: ', this.recipes)
+                    console.log('this.recipes entrée appliance: ', this.recipes)
                     // selectionner recipes selon text
                     this.recipes.forEach(recipe => {                      
                         if(removeAccents(recipe.appliance.toLowerCase()) === removeAccents(text.toLowerCase().trim())){
                             selectedRecipe.push(recipe)
                         }  
                     })
-                    console.log('this.recipes dans appliance après: ', this.recipes)
+                    console.log('this.recipes dans appliance après comparaison avec text: ', selectedRecipe)
                     // si selectedRecipe n'est pas vide
                     if(selectedRecipe.length > 0){
                         // affecter selectedRecipe à this.recipe
@@ -130,7 +130,7 @@ export default class Appliance{
                         cardWrapper.innerHTML = ""
 
                         // afficher newCard selon selectedRecipe
-                        this.recipes.forEach(recipe => {
+                        selectedRecipe.forEach(recipe => {
                             let newCard = new Card(recipe)
                             let newCardTemplate = newCard.render()
                             cardWrapper.appendChild(newCardTemplate)
@@ -178,7 +178,9 @@ export default class Appliance{
                             const ustensil = new Ustensils(totalRecipes)
                             ustensil.render()
                         }else{
+                            // gérer selectedRecipes après close:
                             console.log('selectedRecipe avant! ', selectedRecipe)
+                            // nouveau tableau electedRecipes vide
                             const selectedRecipes = []
                             tagItems.childNodes.forEach(node => {                               
                                 if(node.classList.contains('bg-success')){
@@ -208,7 +210,7 @@ export default class Appliance{
                                     })
                                 }
                             })
-                            console.log('selectedRecipe après! ', selectedRecipes)
+                            console.log('selectedRecipes après close ', selectedRecipes)
                             cardWrapper.innerHTML = ""
                             selectedRecipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
@@ -244,7 +246,7 @@ export default class Appliance{
         <div class="applianceTag__btn  bg-success" > 
             <h2 class="applianceTag__title text-center">Appareil</h2>
             <input class="applianceTag__input hidden" type="text" placeholder="rechercher un appareil"> 
-            <i class="fas fa-chevron-up applianceTag__close"></i> 
+            <i class="fas fa-chevron-down applianceTag__close"></i> 
         </div>
         <div class="applianceTag__list hidden bg-success p-3">        
             <ul class="applianceTag__listItems row bg-success p-">
@@ -260,35 +262,3 @@ export default class Appliance{
         return this.applianceWrapper;
     }
 }
-
-
-// this.recipes.forEach(recipe => {
-                        
-//     if(recipe.appliance.toLowerCase() === text.toLowerCase().trim()){
-//         console.log('text: ', text.toLowerCase())
-//         selectedList.push(recipe)
-       
-//     } 
-//     // if(recipe.ingredients){
-//     //     const ingredientLength = recipe.ingredients.length
-//     //     for(let i=0; i<ingredientLength; i++){
-            
-//     //         if(recipe.ingredients[i].ingredient.toLowerCase().includes(list.textContent.toLowerCase())){
-//     //             selectedList.push(recipe)
-//     //         }
-//     //     }
-//     // }
-//     // if(recipe.ustensils){
-//     //     const ustensilLength = recipe.ustensils.length
-//     //     for(let j=0; j<ustensilLength; j++){
-//     //         if(recipe.ustensils[j].toLowerCase().includes(list.textContent.toLowerCase())){
-//     //             selectedList.push(recipe)
-//     //         }
-//     //     }
-//     // }
-// list.textContent = ""
-// // this.recipes.forEach(recipe => {
-// //     const newCard = new Card(recipe)
-// //     const template = newCard.render()
-// //     cardWrapper.appendChild(template)
-// // })
