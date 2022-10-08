@@ -267,6 +267,13 @@ export default class Ingredient{
     }
     //parametre liste mise a jour
     listItems(){
+        const tagItems = document.querySelector('.tag__items')
+        // tab pour futur liste des currents tags
+        let arrayTag = []
+        // mettre dedans chaque texte de tagItems.childNodes
+        Array.from(tagItems.childNodes).forEach(node => {
+            arrayTag.push(node.innerText)
+        })
         
         let listHTML = ""
         let ingredientTab = []
@@ -277,27 +284,45 @@ export default class Ingredient{
             for(let i= 0; i < length; i++){
                 // si Object.keys(recipe)[i] est ingredients
                 if((Object.keys(recipe)[i] === "ingredients") ){
-                    //console.log('Object.values(recipe)[i]: ', Object.values(recipe)[i])
                     // pour chaque ingredient
                     const ingredientLength = Object.values(recipe)[i].length
                     for(let j = 0; j < ingredientLength; j++){
                         
                         // si ingredientTab ne contient pas ingredient
                         if(!ingredientTab.includes(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))){
-                            
                             ingredientTab.push(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))
                         }
                     }
                 }
             }
         })
-        
+
+        // console.log('ingredientTag: ', ingredientTab)
+        // console.log('arrayTag: ', arrayTag)
+
         ingredientTab.sort().forEach(ingredient => {
-            //console.log('ingred: ', ingredient[0].toUpperCase() + ingredient.slice(1))
+               
             listHTML += `
                 <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
             `;
         })
+       
+        // if(arrayTag[0]){
+        // ingredientTab.sort().forEach(ingredient => {
+            
+        //     listHTML += `
+        //         <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
+        //     `;
+        // })
+        // }else{
+        // ingredientTab.sort().forEach(ingredient => {
+            
+        //     listHTML += `
+        //         <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
+        //     `;
+        // })
+        // }
+    
         return listHTML;
     }
 

@@ -226,6 +226,7 @@ export default class Appliance{
 
     listItems(){
         const tagItems = document.querySelector('.tag__items')
+        console.log('tagItems.childNodes: ', tagItems.childNodes)
         // tab pour futur liste des currents tags
         let arrayTag = []
         // mettre dedans chaque texte de tagItems.childNodes
@@ -240,27 +241,29 @@ export default class Appliance{
         this.recipes.forEach(recipe => {
             const length = Object.entries(recipe).length
             for(let i= 0; i < length; i++){
-                
+                // si ( object.keys === appliance ) ET (pas de doublon)
                 if((Object.keys(recipe)[i] === "appliance") && (!applianceTab.includes(Object.values(recipe)[i]))){
-                    console.log('object value: ', Object.values(recipe)[i])
-                    console.log('arrytag: ', arrayTag)
-                    // 
-                    if(!arrayTag[0]){
-                        applianceTab.push(Object.values(recipe)[i])
-                        listHTML += `
-                            <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
-                        `;
-                        
-                    }else{
-                       
+                    // si il n y a pas de tag
+                    if(arrayTag[0]){
                         arrayTag.forEach(tag =>{
                             if(tag === Object.values(recipe)[i]){
                                 applianceTab.push(Object.values(recipe)[i])
                                 listHTML += `
                                     <li class="applianceTag__listItem col-4 applianceTag__listItem--selected"> ${Object.values(recipe)[i]} </li>
                                 `;
+                            }else{
+                                applianceTab.push(Object.values(recipe)[i])
+                                listHTML += `
+                                        <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
+                                    `;
                             }
-                        })
+                        }) 
+                    }else{
+                        
+                        applianceTab.push(Object.values(recipe)[i])
+                        listHTML += `
+                                <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
+                            `;
                     }
                 }
             }
