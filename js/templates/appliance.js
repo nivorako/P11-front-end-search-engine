@@ -98,7 +98,7 @@ export default class Appliance{
                     return removeAccents(node.textContent.toLowerCase().trim()) !== removeAccents(text.toLowerCase().trim())
                 }
                 // vérifie si les elts tag ne dépasse pas le nbre 3 ET la valeur choisie n'est pas déjà affiché
-                if((tagItemsLength < 3) && Array.from(tagItems.childNodes).every(checkTagItemsValue)){
+                if(Array.from(tagItems.childNodes).every(checkTagItemsValue)){
                      // appliquer render() à tag
                     const tagTemplate = tag.render()
                     // le placer dans tagItems
@@ -230,11 +230,13 @@ export default class Appliance{
         this.recipes.forEach(recipe => {
             const length = Object.entries(recipe).length
             for(let i= 0; i < length; i++){
+                
                 if((Object.keys(recipe)[i] === "appliance") && (!applianceTab.includes(Object.values(recipe)[i]))){
-                   applianceTab.push(Object.values(recipe)[i])
-                   listHTML += `
+                    
+                    applianceTab.push(Object.values(recipe)[i])
+                    listHTML += `
                         <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
-                   `;
+                    `;
                 }
             }
         })

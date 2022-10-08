@@ -88,7 +88,7 @@ export default class Ustensils {
                     return removeAccents(node.textContent.toLowerCase().trim()) !== removeAccents(text.toLowerCase().trim())
                 }
                 
-                 if((tagItemsLength < 3) && Array.from(tagItems.childNodes).every(checkTagItemsValue)){
+                 if(Array.from(tagItems.childNodes).every(checkTagItemsValue)){
                     const tagTemplate = tag.render()
                     // et insérer chaque tagTemplate dans tagItems
                     tagItems.appendChild(tagTemplate)
@@ -171,8 +171,11 @@ export default class Ustensils {
                             // sur chaque tag
                             //if(tagItems.childnodes.classList.contains(bg-primary)){selectionner this.recipesApi selon bg-primary}
                             // sinon .... 
-                            const selectedRecipes = []
+                            // const successRecipes = []
+                            // const primaryRecipes = []
+                            // const dangerRecipes = []
                             // créer trois tab
+                            const selectedRecipes = []
                            
                             tagItems.childNodes.forEach(node => {
                                 // traiter selon ingredient
@@ -204,12 +207,12 @@ export default class Ustensils {
                                         })
                                     })
                                 }
-
+                                //console.log('successRecipes: ', successRecipes)
                                 // utiliser find
-                                //const found = array1.find(element => element.includes(array2));
-                                //const found2 = 
+                                // const found = successRecipes.find(element => element.includes(primaryRecipes));
+                                // const foundRecipes = found.find(elt => elt.includes(dangerRecipes))
                             })
-                            console.log('selectedRecipes après close: ', selectedRecipes)
+                            //console.log('selectedRecipes après close: ', foundRecipes)
                             // mettre à jour liste tag
                             const appliance = new Appliance(selectedRecipes)
                             // console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
@@ -246,15 +249,20 @@ export default class Ustensils {
                     for(let j = 0; j < ustensLength; j++){
                         if(!ustensilTab.includes(Object.values(recipe)[i][j])){
                             ustensilTab.push(Object.values(recipe)[i][j])
-                            listHTML += `
-                                    <li class="ustensilTag__listItem col-4"> ${Object.values(recipe)[i][j]} </li>
-                            `;
+                           
                         }
                     }
                 }
             }
         })
-        
+
+        ustensilTab.sort().forEach(ustensil =>{
+            
+            listHTML += `
+            <li class="ustensilTag__listItem col-4"> ${ustensil[0].toUpperCase() + ustensil.slice(1)} </li>
+        `;
+        })
+
         return listHTML;
     }
 

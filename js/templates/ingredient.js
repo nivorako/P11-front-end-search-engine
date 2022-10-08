@@ -88,7 +88,7 @@ export default class Ingredient{
                     return removeAccents(node.textContent.toLowerCase()).trim() !== removeAccents(text.toLowerCase().trim())
                 }
                 // vérifie que tag items ne dépasse pas 3 elts ET la valeur choisie n'est pas déjà affichée
-                if((tagItemsLength < 3) && Array.from(tagItems.childNodes).every(checkTagItemsValue)){
+                if(Array.from(tagItems.childNodes).every(checkTagItemsValue)){
                     
                     // alors :
                     const tagTemplate = tag.render()
@@ -172,45 +172,67 @@ export default class Ingredient{
                             ustensil.render()
                         // sinon
                         }else{
-                            
+                           
                             // sur chaque tag
                             //if(tagItems.childnodes.classList.contains(bg-primary)){selectionner this.recipesApi selon bg-primary}
                             // sinon .... 
-                            const selectedRecipes = []
-                           
+                            let selectedRecipes = []
+                            const successRedcipes = []
+                            const primaryRecipes = []
+                            const dangerRecipes = []
+                            const arrayFromSelectedRecipes = []
+                            let found = []
+                            let foundRecipes = []
+                            console.log('tagItems.childNodes: ', tagItems.childNodes)
                             tagItems.childNodes.forEach(node => {
                                 // traiter selon ingredient
                                 console.log('node: ', node.textContent)
                                 console.log('node class: ', node.classList)
                                 if(node.classList.contains('bg-success')){
+                                    console.log('in success')
                                     totalRecipes.forEach(recipe => {
+
                                         // if(removeAccents(recipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
                                         if(removeAccents(recipe.appliance.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
                                             selectedRecipes.push(recipe)
+                                            successRedcipes.push(recipe)
                                         }
                                     })
+                                    // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
+                                    if(successRedcipes.length>0) arrayFromSelectedRecipes.push(successRedcipes)
                                 } 
-                                if(node.classList.contains('bg-primary')){
-                                    totalRecipes.forEach(recipe => {   
-                                        recipe.ingredients.forEach(ingredient => {
-                                            if(removeAccents(ingredient.ingredient.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
-                                                selectedRecipes.push(recipe)
-                                            }
-                                        })                    
-                                    })
-                                }
+                               
                                 if(node.classList.contains('bg-danger')){
+                                    console.log('in danger')
                                     totalRecipes.forEach(recipe => {
                                         
                                         recipe.ustensils.forEach(elt => {
                                             if(removeAccents(elt.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
                                                 selectedRecipes.push(recipe)
+                                                dangerRecipes.push(recipe) 
                                             }
                                         })
                                     })
+                                    // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
+                                    if(dangerRecipes.length>0) arrayFromSelectedRecipes.push(dangerRecipes)
+                                }
+
+                                if(node.classList.contains('bg-primary')){
+                                    console.log('in primary')
+                                    totalRecipes.forEach(recipe => {   
+                                        recipe.ingredients.forEach(ingredient => {
+                                            if(removeAccents(ingredient.ingredient.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
+                                                selectedRecipes.push(recipe)
+                                                primaryRecipes.push(recipe)
+                                            }
+                                        })                    
+                                    })
+                                    // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
+                                    if(primaryRecipes.length>0) arrayFromSelectedRecipes.push(primaryRecipes)
                                 }
                             })
-                            console.log('selectedRecipes après close : ', selectedRecipes)
+
+                            selectedRecipes = this.selectRecipe(arrayFromSelectedRecipes)
                             // mettre à jour liste tag
                             const appliance = new Appliance(selectedRecipes)
                             // console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
@@ -235,10 +257,24 @@ export default class Ingredient{
         })
         
     }
+
+    selectRecipe(array){
+        let foundRecipes = []
+        if(array.length === 3){
+            const tab = array[0].filter(elt => array[1].indexOf(elt) !== -1)
+            foundRecipes = array[2].filter(elt => tab.indexOf(elt) !== -1)
+            
+        }else if(array.length === 2){
+            foundRecipes = array[0].filter(elt => array[1].indexOf(elt) !== -1)
+        }else{
+            foundRecipes = array[0]
+        }
+         
+        return foundRecipes
+    }
     //parametre liste mise a jour
     listItems(){
-        let ingredCount = 0
-        let select = 0
+        
         let listHTML = ""
         let ingredientTab = []
 
@@ -252,10 +288,10 @@ export default class Ingredient{
                     // pour chaque ingredient
                     const ingredientLength = Object.values(recipe)[i].length
                     for(let j = 0; j < ingredientLength; j++){
-                        ingredCount++
+                        
                         // si ingredientTab ne contient pas ingredient
                         if(!ingredientTab.includes(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))){
-                            select++
+                            
                             ingredientTab.push(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))
                         }
                     }
@@ -264,8 +300,9 @@ export default class Ingredient{
         })
         
         ingredientTab.sort().forEach(ingredient => {
+            //console.log('ingred: ', ingredient[0].toUpperCase() + ingredient.slice(1))
             listHTML += `
-                <li class="ingredientTag__listItem col-4"> ${ingredient} </li>  
+                <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
             `;
         })
         return listHTML;
