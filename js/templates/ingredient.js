@@ -181,20 +181,14 @@ export default class Ingredient{
                             const primaryRecipes = []
                             const dangerRecipes = []
                             const arrayFromSelectedRecipes = []
-                            let found = []
-                            let foundRecipes = []
-                            console.log('tagItems.childNodes: ', tagItems.childNodes)
                             tagItems.childNodes.forEach(node => {
                                 // traiter selon ingredient
-                                console.log('node: ', node.textContent)
-                                console.log('node class: ', node.classList)
                                 if(node.classList.contains('bg-success')){
-                                    console.log('in success')
                                     totalRecipes.forEach(recipe => {
 
                                         // if(removeAccents(recipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
                                         if(removeAccents(recipe.appliance.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
-                                            selectedRecipes.push(recipe)
+                                            //selectedRecipes.push(recipe)
                                             successRedcipes.push(recipe)
                                         }
                                     })
@@ -203,12 +197,11 @@ export default class Ingredient{
                                 } 
                                
                                 if(node.classList.contains('bg-danger')){
-                                    console.log('in danger')
                                     totalRecipes.forEach(recipe => {
                                         
                                         recipe.ustensils.forEach(elt => {
                                             if(removeAccents(elt.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
-                                                selectedRecipes.push(recipe)
+                                                //selectedRecipes.push(recipe)
                                                 dangerRecipes.push(recipe) 
                                             }
                                         })
@@ -222,7 +215,7 @@ export default class Ingredient{
                                     totalRecipes.forEach(recipe => {   
                                         recipe.ingredients.forEach(ingredient => {
                                             if(removeAccents(ingredient.ingredient.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
-                                                selectedRecipes.push(recipe)
+                                                //selectedRecipes.push(recipe)
                                                 primaryRecipes.push(recipe)
                                             }
                                         })                    

@@ -13,7 +13,8 @@
     --fmed : medium;
     --br : 5px ;
     --fs  : 10px;
-    --primary : #e7e7e7;
+    --primary : #d7d7d7;
+    --selected : rgb(136, 133, 133);
 }
 
 ul,
@@ -122,6 +123,14 @@ li{
 .ustensilTag__listItem:hover{
     cursor: pointer;
     transform: scale(1.1);
+}
+
+.applianceTag__listItem--selected{
+    color: var(--selected);
+}
+
+.applianceTag__listItem--selected:hover{
+    transform: scale(1);
 }
 
 .ingredientTag__listItems{

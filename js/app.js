@@ -39,7 +39,6 @@ class App {
             this.cardWrapper.appendChild(template)
         })
 
-
     }
 }
 

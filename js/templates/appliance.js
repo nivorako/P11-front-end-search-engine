@@ -97,7 +97,7 @@ export default class Appliance{
                     
                     return removeAccents(node.textContent.toLowerCase().trim()) !== removeAccents(text.toLowerCase().trim())
                 }
-                // vérifie si les elts tag ne dépasse pas le nbre 3 ET la valeur choisie n'est pas déjà affiché
+                // vérifie si la valeur choisie n'est pas déjà affiché
                 if(Array.from(tagItems.childNodes).every(checkTagItemsValue)){
                      // appliquer render() à tag
                     const tagTemplate = tag.render()
@@ -225,21 +225,48 @@ export default class Appliance{
     }
 
     listItems(){
+        const tagItems = document.querySelector('.tag__items')
+        // tab pour futur liste des currents tags
+        let arrayTag = []
+        // mettre dedans chaque texte de tagItems.childNodes
+        Array.from(tagItems.childNodes).forEach(node => {
+            arrayTag.push(node.innerText)
+        })
+
+        //console.log('arrayTag: ', arrayTag)
         let listHTML = ""
+        // tab pour futur texte de applianceTag__listItems 
         let applianceTab = []
         this.recipes.forEach(recipe => {
             const length = Object.entries(recipe).length
             for(let i= 0; i < length; i++){
                 
                 if((Object.keys(recipe)[i] === "appliance") && (!applianceTab.includes(Object.values(recipe)[i]))){
-                    
-                    applianceTab.push(Object.values(recipe)[i])
-                    listHTML += `
-                        <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
-                    `;
+                    console.log('object value: ', Object.values(recipe)[i])
+                    console.log('arrytag: ', arrayTag)
+                    // 
+                    if(!arrayTag[0]){
+                        applianceTab.push(Object.values(recipe)[i])
+                        listHTML += `
+                            <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
+                        `;
+                        
+                    }else{
+                       
+                        arrayTag.forEach(tag =>{
+                            if(tag === Object.values(recipe)[i]){
+                                applianceTab.push(Object.values(recipe)[i])
+                                listHTML += `
+                                    <li class="applianceTag__listItem col-4 applianceTag__listItem--selected"> ${Object.values(recipe)[i]} </li>
+                                `;
+                            }
+                        })
+                    }
                 }
             }
         })
+        
+
         return listHTML;
     }
 
