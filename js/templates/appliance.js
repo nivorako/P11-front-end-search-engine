@@ -112,7 +112,7 @@ export default class Appliance{
                             selectedRecipe.push(recipe)
                         }  
                     })
-                    console.log('this.recipes dans appliance après comparaison avec text: ', selectedRecipe)
+                    
                     // si selectedRecipe n'est pas vide
                     if(selectedRecipe.length > 0){
                         // affecter selectedRecipe à this.recipe
@@ -220,9 +220,8 @@ export default class Appliance{
                                  // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
                                  if(dangerRecipes.length>0) arrayFromSelectedRecipes.push(dangerRecipes)
                             })
-                            console.log("arrayFromSelectedRecipes in appliance: ", arrayFromSelectedRecipes)
+                           
                             selectedRecipes = this.selectRecipe(arrayFromSelectedRecipes)
-                            console.log('selectedRecipes in appliance')
                             // mettre à jour liste tag
                             const appliance = new Appliance(selectedRecipes)
                             // console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
@@ -273,7 +272,6 @@ export default class Appliance{
         let listHTML = ""
         // tab pour futur texte de applianceTag__listItems 
         let applianceTab = []
-        console.log('data dans appliance: ', this.recipes)
         this.recipes.forEach(recipe => {
             const length = Object.entries(recipe).length
             for(let i= 0; i < length; i++){

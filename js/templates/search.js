@@ -28,8 +28,8 @@ export default class Search{
             if(inputValue.length >= 3){
                 // à commenter por js B
                 cards.innerHTML = ""
-                
-                recipes.forEach(recipe => {
+
+                for(const recipe of recipes){
                     if(recipe.appliance){
                         if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
                         selectedList.push(recipe)
@@ -60,10 +60,10 @@ export default class Search{
                             //console.log('description: ', recipe.description)
                             selectedList.push(recipe)
                         }
-                    }
-                    
-                })
-               
+                    }          
+                }
+                
+                
                 // éviter doublons dans selectedList
                 const filteredList  = []
                 const selectedListLength = selectedList.length
@@ -72,7 +72,7 @@ export default class Search{
                         filteredList.push(list)
                     }
                 })
-                
+                console.log('filtered list: ', filteredList)
                 // si la liste est vide
                 if(filteredList.length === 0){
                     const notFound = new NotFound()

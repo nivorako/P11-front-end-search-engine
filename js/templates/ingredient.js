@@ -87,7 +87,7 @@ export default class Ingredient{
                     
                     return removeAccents(node.textContent.toLowerCase()).trim() !== removeAccents(text.toLowerCase().trim())
                 }
-                // vérifie que tag items ne dépasse pas 3 elts ET la valeur choisie n'est pas déjà affichée
+                // vérifie que la valeur choisie n'est pas déjà affichée
                 if(Array.from(tagItems.childNodes).every(checkTagItemsValue)){
                     
                     // alors :
@@ -95,24 +95,20 @@ export default class Ingredient{
                     // insérer tagTemplate dans tagItems
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu text de ingredientTagList
-                    // console.log('ingredientTagList.textContent: ', ingredientTagList.textContent)
                     ingredientTagList.innerHTML = ""
                     
                      // selectionner recipes selon text
-                    // console.log('this.recipes à l origine: ', this.recipes)
                     this.recipes.forEach(recipe => {   
                         recipe.ingredients.forEach(ingredient => {
                             if(removeAccents(ingredient.ingredient.toLowerCase().trim()).includes(removeAccents(text.toLowerCase().trim())))
                             selectedRecipe.push(recipe)
                         })                    
                     })
-                    console.log('this.recipes dans ingred: ', this.recipes)
                     // si selectedRecipe n'est pas vide
                     if(selectedRecipe.length > 0 ){
                         // affecter selectedRecipe à this.recipe
                         this.recipes = selectedRecipe
                         // instancier new Appliance()
-                        console.log('this.recipes dans ingred: ', this.recipes)
                         const appliance = new Appliance(selectedRecipe)
                         appliance.render()
                         // instancier 
@@ -212,7 +208,6 @@ export default class Ingredient{
                                 }
 
                                 if(node.classList.contains('bg-primary')){
-                                    console.log('in primary')
                                     totalRecipes.forEach(recipe => {   
                                         recipe.ingredients.forEach(ingredient => {
                                             if(removeAccents(ingredient.ingredient.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
@@ -266,7 +261,7 @@ export default class Ingredient{
          
         return foundRecipes
     }
-    
+
     //parametre liste mise a jour
     listItems(){
         const tagItems = document.querySelector('.tag__items')
