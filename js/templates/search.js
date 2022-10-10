@@ -63,6 +63,7 @@ export default class Search{
                     }
                     
                 })
+               
                 // éviter doublons dans selectedList
                 const filteredList  = []
                 const selectedListLength = selectedList.length
@@ -71,6 +72,7 @@ export default class Search{
                         filteredList.push(list)
                     }
                 })
+                
                 // si la liste est vide
                 if(filteredList.length === 0){
                     const notFound = new NotFound()

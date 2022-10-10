@@ -177,10 +177,11 @@ export default class Ingredient{
                             //if(tagItems.childnodes.classList.contains(bg-primary)){selectionner this.recipesApi selon bg-primary}
                             // sinon .... 
                             let selectedRecipes = []
-                            const successRedcipes = []
+                            const successRecipes = []
                             const primaryRecipes = []
                             const dangerRecipes = []
                             const arrayFromSelectedRecipes = []
+
                             tagItems.childNodes.forEach(node => {
                                 // traiter selon ingredient
                                 if(node.classList.contains('bg-success')){
@@ -189,11 +190,11 @@ export default class Ingredient{
                                         // if(removeAccents(recipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
                                         if(removeAccents(recipe.appliance.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
                                             //selectedRecipes.push(recipe)
-                                            successRedcipes.push(recipe)
+                                            successRecipes.push(recipe)
                                         }
                                     })
                                     // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
-                                    if(successRedcipes.length>0) arrayFromSelectedRecipes.push(successRedcipes)
+                                    if(successRecipes.length>0) arrayFromSelectedRecipes.push(successRecipes)
                                 } 
                                
                                 if(node.classList.contains('bg-danger')){
@@ -265,6 +266,7 @@ export default class Ingredient{
          
         return foundRecipes
     }
+    
     //parametre liste mise a jour
     listItems(){
         const tagItems = document.querySelector('.tag__items')
@@ -296,9 +298,6 @@ export default class Ingredient{
                 }
             }
         })
-
-        // console.log('ingredientTag: ', ingredientTab)
-        // console.log('arrayTag: ', arrayTag)
 
         ingredientTab.sort().forEach(ingredient => {
                

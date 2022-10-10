@@ -105,8 +105,8 @@ export default class Appliance{
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu texte de la liste
                     applianceTagList.innerHTML = ""
-                    console.log('this.recipes entrée appliance: ', this.recipes)
                     // selectionner recipes selon text
+                    
                     this.recipes.forEach(recipe => {                      
                         if(removeAccents(recipe.appliance.toLowerCase()) === removeAccents(text.toLowerCase().trim())){
                             selectedRecipe.push(recipe)
@@ -158,7 +158,7 @@ export default class Appliance{
                         applianceTagList.innerHTML = tagItem.textContent
 
                         // // renouveler list dans card                   
-                        // récupérer le reste de tag.textContent et refaire la liste à partir de 
+                        // récupérer le reste de node.textContent et refaire la liste à partir de 
                         // console.log('length: ', tagItems.childNodes.length)
                         if(tagItems.childNodes.length == 0){
                             cardWrapper.innerHTML = ""
@@ -178,39 +178,61 @@ export default class Appliance{
                             const ustensil = new Ustensils(totalRecipes)
                             ustensil.render()
                         }else{
-                            // gérer selectedRecipes après close:
-                            console.log('selectedRecipe avant! ', selectedRecipe)
-                            // nouveau tableau electedRecipes vide
-                            const selectedRecipes = []
-                            tagItems.childNodes.forEach(node => {                               
+                            let selectedRecipes = []
+                            const successRecipes = []
+                            const primaryRecipes = []
+                            const dangerRecipes = []
+                            const arrayFromSelectedRecipes = []
+                            
+                            tagItems.childNodes.forEach(node => {                             
                                 if(node.classList.contains('bg-success')){
                                     totalRecipes.forEach(recipe => {
-                                        if(removeAccents(recipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
-                                            selectedRecipes.push(recipe)
+                                        //if(removeAccents(recipe.appliance.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
+                                        if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(node.textContent.toLowerCase().trim()))){
+                                            successRecipes.push(recipe)
                                         }
                                     })
+                                    // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
+                                    if(successRecipes.length>0) arrayFromSelectedRecipes.push(successRecipes)
                                 }
                                 if(node.classList.contains('bg-primary')){
                                     totalRecipes.forEach(recipe => {   
                                         recipe.ingredients.forEach(ingredient => {
-                                            if(removeAccents(ingredient.ingredient.toLowerCase().trim()) === removeAccents(node.textContent.toLowerCase().trim())){
-                                                selectedRecipes.push(recipe)
+                                            
+                                            if(removeAccents(ingredient.ingredient.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){    
+                                                primaryRecipes.push(recipe)
                                             }
                                         })                    
                                     })
+                                     // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
+                                    if(primaryRecipes.length>0) arrayFromSelectedRecipes.push(primaryRecipes)
                                 }
                                 if(node.classList.contains('bg-danger')){
                                     totalRecipes.forEach(recipe => {
                                         
                                         recipe.ustensils.forEach(elt => {
                                             if(removeAccents(elt.toLowerCase().trim()).includes(removeAccents(node.textContent.toLowerCase().trim()))){
-                                                selectedRecipes.push(recipe)
+                                                dangerRecipes.push(recipe)
                                             }
                                         })
                                     })
                                 }
+                                 // si (  ) on ajoute le tableau dans un tableau arrayFromSelectedRecipes
+                                 if(dangerRecipes.length>0) arrayFromSelectedRecipes.push(dangerRecipes)
                             })
-                            console.log('selectedRecipes après close ', selectedRecipes)
+                            console.log("arrayFromSelectedRecipes in appliance: ", arrayFromSelectedRecipes)
+                            selectedRecipes = this.selectRecipe(arrayFromSelectedRecipes)
+                            console.log('selectedRecipes in appliance')
+                            // mettre à jour liste tag
+                            const appliance = new Appliance(selectedRecipes)
+                            // console.log('ici j instancie new Appliance dans tagclose si tagItems.childNodes.length > 0')
+                            appliance.render()
+                            // instancier new Ingredient()
+                            const ingredient = new Ingredient(selectedRecipes)
+                            ingredient.render()
+                            // instancier 
+                            const ustensil = new Ustensils(selectedRecipes)
+                            ustensil.render()
                             cardWrapper.innerHTML = ""
                             selectedRecipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
@@ -224,9 +246,23 @@ export default class Appliance{
         })
     }
 
+    selectRecipe(array){
+        let foundRecipes = []
+        if(array.length === 3){
+            const tab = array[0].filter(elt => array[1].indexOf(elt) !== -1)
+            foundRecipes = array[2].filter(elt => tab.indexOf(elt) !== -1)
+            
+        }else if(array.length === 2){
+            foundRecipes = array[0].filter(elt => array[1].indexOf(elt) !== -1)
+        }else{
+            foundRecipes = array[0]
+        }
+         
+        return foundRecipes
+    }
+
     listItems(){
         const tagItems = document.querySelector('.tag__items')
-        console.log('tagItems.childNodes: ', tagItems.childNodes)
         // tab pour futur liste des currents tags
         let arrayTag = []
         // mettre dedans chaque texte de tagItems.childNodes
@@ -234,37 +270,20 @@ export default class Appliance{
             arrayTag.push(node.innerText)
         })
 
-        //console.log('arrayTag: ', arrayTag)
         let listHTML = ""
         // tab pour futur texte de applianceTag__listItems 
         let applianceTab = []
+        console.log('data dans appliance: ', this.recipes)
         this.recipes.forEach(recipe => {
             const length = Object.entries(recipe).length
             for(let i= 0; i < length; i++){
                 // si ( object.keys === appliance ) ET (pas de doublon)
                 if((Object.keys(recipe)[i] === "appliance") && (!applianceTab.includes(Object.values(recipe)[i]))){
                     // si il n y a pas de tag
-                    if(arrayTag[0]){
-                        arrayTag.forEach(tag =>{
-                            if(tag === Object.values(recipe)[i]){
-                                applianceTab.push(Object.values(recipe)[i])
-                                listHTML += `
-                                    <li class="applianceTag__listItem col-4 applianceTag__listItem--selected"> ${Object.values(recipe)[i]} </li>
-                                `;
-                            }else{
-                                applianceTab.push(Object.values(recipe)[i])
-                                listHTML += `
-                                        <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
-                                    `;
-                            }
-                        }) 
-                    }else{
-                        
-                        applianceTab.push(Object.values(recipe)[i])
-                        listHTML += `
-                                <li class="applianceTag__listItem col-4"> ${Object.values(recipe)[i]} </li>
-                            `;
-                    }
+                    applianceTab.push(Object.values(recipe)[i])
+                    listHTML += `
+                        <li class="applianceTag__listItem col-4 applianceTag__listItem"> ${Object.values(recipe)[i]} </li>
+                    `;
                 }
             }
         })
