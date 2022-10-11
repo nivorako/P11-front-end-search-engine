@@ -290,6 +290,71 @@ export default class Appliance{
         return listHTML;
     }
 
+    searchAppliance(recipes){
+        const applianceTagInput = document.querySelector('.applianceTag__input')
+        const cards = document.querySelector('.cards')
+        const notFoundWrapper = document.querySelector('.notFound')
+        applianceTagInput.addEventListener('keyup', (e) => {
+            let inputValue = e.target.value
+            let selectedList = []
+            console.log('inputValue: ', inputValue.length)
+            if(inputValue.length > 2){
+                for(const recipe of recipes){   
+                    if(recipe.appliance){
+                        if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
+                        selectedList.push(recipe)
+                    } 
+                }
+
+                 // éviter doublons dans selectedList
+                 const filteredList  = []
+                 selectedList.forEach(list => {
+                     if(!filteredList.includes(list)){
+                         filteredList.push(list)
+                     }
+                 })
+
+                 if(filteredList.length === 0){
+                    console.log('zero')
+                    cards.innerHTML = ""
+                    const notFound = new NotFound()
+                    notFound.render()
+                    notFoundWrapper.classList.remove('hidden')
+                }else{
+
+                    // ici on instancie seulement ingredient et unstensils
+                    const ingredient = new Ingredient(filteredList)
+                    ingredient.render()
+                    const ustensil = new Ustensils(filteredList)
+                    ustensil.render()    
+                    // supprimer la page not found
+                    notFoundWrapper.classList.add('hidden')
+                    cards.innerHTML = ""
+                    // donner chaque list de selectedList à newcard pour afficher dans cards
+                    filteredList.forEach(selected => {
+                        const newCard = new Card(selected)
+                        const newCardTemplate = newCard.render()
+                        cards.appendChild(newCardTemplate)
+                    })
+                }
+            }else{
+                notFoundWrapper.classList.add('hidden')
+                cards.innerHTML = ""
+
+                const ingredient = new Ingredient(recipes)
+                ingredient.render()
+                const ustensil = new Ustensils(recipes)
+                ustensil.render() 
+                recipes.forEach(recipe => { 
+                    const card = new Card(recipe)
+                    const template = card.render()
+                    
+                    cards.appendChild(template)
+                })
+            }
+        })
+    }
+
     render(){
         const tool = /*html */ `
         <div class="applianceTag__btn  bg-success" > 
@@ -306,6 +371,7 @@ export default class Appliance{
         `;
 
         this.applianceWrapper.innerHTML = tool;
+        this. searchAppliance(this.recipes)
         this.listOnclick();
         this.applianceOnClick();
         return this.applianceWrapper;

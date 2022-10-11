@@ -285,6 +285,75 @@ export default class Ustensils {
         return listHTML;
     }
 
+    searchUstensil(recipes){
+        const ustensilTagInput = document.querySelector('.ustensilTag__input')
+        const cards = document.querySelector('.cards')
+        const notFoundWrapper = document.querySelector('.notFound')
+        ustensilTagInput.addEventListener('keyup', (e) => {
+            let inputValue = e.target.value
+            let selectedList = []
+            console.log('inputValue: ', inputValue.length)
+            if(inputValue.length > 2){
+                for(const recipe of recipes){   
+                    if(recipe.ustensils){
+                        const ustensilLength = recipe.ustensils.length
+                        for(let j=0; j<ustensilLength; j++){
+                            if(removeAccents(recipe.ustensils[j].toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                                selectedList.push(recipe)
+                            }
+                        }
+                    } 
+                }
+
+                // éviter doublons dans selectedList
+                const filteredList  = []
+                selectedList.forEach(list => {
+                    if(!filteredList.includes(list)){
+                        filteredList.push(list)
+                    }
+                })
+                console.log('filtered: ', filteredList)
+                if(filteredList.length === 0){
+                    console.log('zero')
+                    cards.innerHTML = ""
+                    const notFound = new NotFound()
+                    notFound.render()
+                    notFoundWrapper.classList.remove('hidden')
+                }else{
+                    console.log('pas zero')
+                    // ici on instancie seulement appliance et unstensils
+                    const appliance = new Appliance(filteredList)
+                    appliance.render()
+                    const ingredient = new Ingredient(filteredList)
+                    ingredient.render()
+                    // supprimer la page not found
+                    notFoundWrapper.classList.add('hidden')
+                    cards.innerHTML = ""
+                    // donner chaque list de selectedList à newcard pour afficher dans cards
+                    filteredList.forEach(selected => {
+                        const newCard = new Card(selected)
+                        const newCardTemplate = newCard.render()
+                        cards.appendChild(newCardTemplate)
+                    })
+                }
+            }else{
+                notFoundWrapper.classList.add('hidden')
+                cards.innerHTML = ""
+
+                const appliance = new Appliance(recipes)
+                appliance.render()
+                const ingredient = new Ingredient(recipes)
+                    ingredient.render()
+                recipes.forEach(recipe => { 
+                    const card = new Card(recipe)
+                    const template = card.render()
+                    
+                    cards.appendChild(template)
+                })
+            }
+        })
+    }
+
     render(){
         const ustensil = /*html*/ `
         <div class="ustensilTag__btn  bg-danger" > 
@@ -300,6 +369,7 @@ export default class Ustensils {
         `;
 
         this.ustensilsWrapper.innerHTML = ustensil;
+        this.searchUstensil(this.recipes)
         this.ustensilOnClick();
         this.listOnclick();
         return this.ustensilsWrapper;

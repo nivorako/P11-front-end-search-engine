@@ -320,6 +320,75 @@ export default class Ingredient{
         return listHTML;
     }
 
+    searchIngredient(recipes){
+        const ingredientTagInput = document.querySelector('.ingredientTag__input')
+        const cards = document.querySelector('.cards')
+        const notFoundWrapper = document.querySelector('.notFound')
+        ingredientTagInput.addEventListener('keyup', (e) => {
+            let inputValue = e.target.value
+            let selectedList = []
+            console.log('inputValue: ', inputValue.length)
+            if(inputValue.length > 2){
+                for(const recipe of recipes){   
+                    if(recipe.ingredients){
+                        const ingredientLength = recipe.ingredients.length
+                        for(let i=0; i<ingredientLength; i++){
+                            
+                            if(removeAccents(recipe.ingredients[i].ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim())))
+                            selectedList.push(recipe)
+                        }
+                    } 
+                }
+
+                // éviter doublons dans selectedList
+                const filteredList  = []
+                selectedList.forEach(list => {
+                    if(!filteredList.includes(list)){
+                        filteredList.push(list)
+                    }
+                })
+
+                if(filteredList.length === 0){
+                    console.log('zero')
+                    cards.innerHTML = ""
+                    const notFound = new NotFound()
+                    notFound.render()
+                    notFoundWrapper.classList.remove('hidden')
+                }else{
+                    console.log('pas zero')
+                    // ici on instancie seulement appliance et unstensils
+                    const appliance = new Appliance(filteredList)
+                    appliance.render()
+                    const ustensil = new Ustensils(filteredList)
+                    ustensil.render()
+                    // supprimer la page not found
+                    notFoundWrapper.classList.add('hidden')
+                    cards.innerHTML = ""
+                    // donner chaque list de selectedList à newcard pour afficher dans cards
+                    filteredList.forEach(selected => {
+                        const newCard = new Card(selected)
+                        const newCardTemplate = newCard.render()
+                        cards.appendChild(newCardTemplate)
+                    })
+                }
+            }else{
+                notFoundWrapper.classList.add('hidden')
+                cards.innerHTML = ""
+
+                const appliance = new Appliance(recipes)
+                appliance.render()
+                const ustensil = new Ustensils(recipes)
+                ustensil.render()
+                recipes.forEach(recipe => { 
+                    const card = new Card(recipe)
+                    const template = card.render()
+                    
+                    cards.appendChild(template)
+                })
+            }
+        })
+    }
+
     render(){
         const ingredientTag = /*html*/ `
             <div class="ingredientTag__btn  bg-primary" > 
@@ -335,6 +404,7 @@ export default class Ingredient{
             `;
 
         this.ingredientWrapper.innerHTML = ingredientTag;
+        this.searchIngredient(this.recipes);
         this.ingredientOnClick();
         this.listOnclick();
         return this.ingredientWrapper;

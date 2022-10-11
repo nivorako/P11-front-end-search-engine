@@ -3,8 +3,8 @@ import Ingredient from './templates/ingredient.js';
 import Ustensils from './templates/ustensils.js';
 import Appliance from './templates/appliance.js';
 import Search from './templates/search.js';
+import SearchB from './templates/searchB.js';
 import Card from './templates/card.js';
-import Tag from './templates/tag.js';
 
 class App {
     constructor() {
@@ -19,9 +19,13 @@ class App {
 
         const recipes = await this.recipesApi.get();
 
-        const search = new Search();     
-        search.render()
-        search.onSearch(recipes);
+        // const search = new Search();     
+        // search.render()
+        // search.onSearch(recipes);
+
+        const searchB = new SearchB();     
+        searchB.render()
+        searchB.onSearch(recipes);
 
         const ingredient = new Ingredient(recipes);
         ingredient.render();

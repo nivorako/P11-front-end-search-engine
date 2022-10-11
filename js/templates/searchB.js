@@ -23,13 +23,14 @@ export default class Search{
             }
             let selectedList = []
             //pour js bench.me  donner valeur en dur a input value
-            let inputValue = e.target.value
+            //let inputValue = e.target.value
+            const inputValue = e.target.value            
             // si longueur de mot saisi
             if(inputValue.length >= 3){
                 // à commenter por js B
                 cards.innerHTML = ""
 
-                for(const recipe of recipes){
+                recipes.map(recipe => {
                     if(recipe.appliance){
                         if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
                         selectedList.push(recipe)
@@ -61,17 +62,17 @@ export default class Search{
                             selectedList.push(recipe)
                         }
                     }          
-                }
-                
+                }) 
                 
                 // éviter doublons dans selectedList
                 const filteredList  = []
+                const selectedListLength = selectedList.length
                 selectedList.forEach(list => {
                     if(!filteredList.includes(list)){
                         filteredList.push(list)
                     }
                 })
-               
+                console.log('filtered list: ', filteredList)
                 // si la liste est vide
                 if(filteredList.length === 0){
                     const notFound = new NotFound()
