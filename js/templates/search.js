@@ -29,7 +29,7 @@ export default class Search{
                 // à commenter por js B
                 cards.innerHTML = ""
 
-                for(const recipe of recipes){
+                recipes.map(recipe => {
                     if(recipe.appliance){
                         if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
                         selectedList.push(recipe)
@@ -61,7 +61,40 @@ export default class Search{
                             selectedList.push(recipe)
                         }
                     }          
-                }
+                })
+                // for(const recipe of recipes){
+                //     if(recipe.appliance){
+                //         if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
+                //         selectedList.push(recipe)
+                //     } 
+                //     if(recipe.ingredients){
+                //         const ingredientLength = recipe.ingredients.length
+                //         for(let i=0; i<ingredientLength; i++){
+                            
+                //             if(removeAccents(recipe.ingredients[i].ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim())))
+                //             selectedList.push(recipe)
+                //         }
+                //     }
+                //     if(recipe.ustensils){
+                //         const ustensilLength = recipe.ustensils.length
+                //         for(let j=0; j<ustensilLength; j++){
+                //             if(removeAccents(recipe.ustensils[j].toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                //                 selectedList.push(recipe)
+                //             }
+                //         }
+                //     }
+                //     if(recipe.name){
+                //         if(removeAccents(recipe.name.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                //             selectedList.push(recipe)
+                //         }
+                //     }
+                //     if(recipe.description){
+                //         if(removeAccents(recipe.description.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                //             //console.log('description: ', recipe.description)
+                //             selectedList.push(recipe)
+                //         }
+                //     }          
+                // }
                 
                 
                 // éviter doublons dans selectedList
