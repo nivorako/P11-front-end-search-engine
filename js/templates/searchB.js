@@ -29,8 +29,8 @@ export default class Search{
             if(inputValue.length >= 3){
                 // à commenter por js B
                 cards.innerHTML = ""
-
-                recipes.map(recipe => {
+               
+                recipes.forEach(recipe => {
                     if(recipe.appliance){
                         if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
                         selectedList.push(recipe)
