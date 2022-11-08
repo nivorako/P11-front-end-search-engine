@@ -31,37 +31,34 @@ export default class Search{
                 cards.innerHTML = ""
                
                 recipes.forEach(recipe => {
-                    if(recipe.appliance){
-                        if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
-                        selectedList.push(recipe)
-                    } 
-                    if(recipe.ingredients){
-                        const ingredientLength = recipe.ingredients.length
-                        for(let i=0; i<ingredientLength; i++){
-                            
-                            if(removeAccents(recipe.ingredients[i].ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim())))
+                    
+                    for(const [key, value ] of Object.entries(recipe)){
+                        if(`${key}` === "appliance" && removeAccents(`${value}`.toLowerCase().trim()) ===  removeAccents(inputValue.toLowerCase().trim())){
+                            selectedList.push(recipe)
+                            console.log('appliance: ', `${value}`)
+                        }
+
+                        if(`${key}` === "ustensils" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                            selectedList.push(recipe)
+                            console.log('ustensils: ', selectedList)
+                        }
+
+                        if(`${key}` === "name" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             selectedList.push(recipe)
                         }
-                    }
-                    if(recipe.ustensils){
-                        const ustensilLength = recipe.ustensils.length
-                        for(let j=0; j<ustensilLength; j++){
-                            if(removeAccents(recipe.ustensils[j].toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                        if(`${key}` === "ingredients"){
+                            for(const elt of recipe.ingredients)
+                            if(removeAccents(elt.ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                                 selectedList.push(recipe)
+                                console.log("ingredient: ", selectedList)
                             }
                         }
-                    }
-                    if(recipe.name){
-                        if(removeAccents(recipe.name.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                        if(`${key}` === "description" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             selectedList.push(recipe)
+                            console.log("description: ", selectedList)
                         }
                     }
-                    if(recipe.description){
-                        if(removeAccents(recipe.description.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                            //console.log('description: ', recipe.description)
-                            selectedList.push(recipe)
-                        }
-                    }          
+      
                 }) 
                 
                 // éviter doublons dans selectedList
@@ -72,7 +69,7 @@ export default class Search{
                         filteredList.push(list)
                     }
                 })
-                console.log('filtered list: ', filteredList)
+                
                 // si la liste est vide
                 if(filteredList.length === 0){
                     const notFound = new NotFound()
