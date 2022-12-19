@@ -163,7 +163,9 @@ article{
     border-radius: 0 0 var(--br) var(--br);
     height: 200px;
     max-height: 200px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    
+   
 }
 
 .card__head{
@@ -183,6 +185,17 @@ article{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+}
+
+.card__receips{
+    height: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+       
+    display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
 }
 
 .card__listItems{
