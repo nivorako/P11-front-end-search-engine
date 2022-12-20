@@ -130,7 +130,7 @@ export default class Ingredient{
                         cardWrapper.innerHTML = ""
                         const notFound = new NotFound()
                         cardWrapper.appendChild(notFound.render())
-                   }
+                    }
                     // récupérer le tagItem actuel
                     const tagItem = document.querySelector(`.tag__item${tag.instanceId}`)
                     // ajouter couleur à tagItem

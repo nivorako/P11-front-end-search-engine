@@ -19,13 +19,13 @@ class App {
 
         const recipes = await this.recipesApi.get();
 
-        const search = new Search();     
-        search.render()
-        search.onSearch(recipes);
+        // const search = new Search();     
+        // search.render()
+        // search.onSearch(recipes);
 
-        // const searchB = new SearchB();     
-        // searchB.render()
-        // searchB.onSearch(recipes);
+        const searchB = new SearchB();     
+        searchB.render()
+        searchB.onSearch(recipes);
 
         const ingredient = new Ingredient(recipes);
         ingredient.render();
