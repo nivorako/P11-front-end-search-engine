@@ -29,7 +29,7 @@ export default class Card{
                     <div class="card__head">
                         <h2 class="card__title">${this.recipe.name} </h2>
                         <div class="card__timer">
-                            <i class="card__timeWatch">O</i>
+                            <i class="card__timeWatch far fa-clock"></i>
                             <span class="card__minutes">${this.recipe.time} minutes</span>
                         </div>
                     </div>

@@ -6,7 +6,8 @@ export default class NotFound{
     render(){
         const notFound = /*html */ `
         
-            <h1 class="notFound__title">Aucune recette ne correspond à votre recherche</h1>
+            <h1 class="notFound__title">Aucune recette ne correspond à votre critère... vous pouvez
+            chercher « tarte aux pommes », « poisson », etc.</h1>
        
         `;
 

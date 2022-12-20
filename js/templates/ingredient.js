@@ -355,7 +355,7 @@ export default class Ingredient{
                     notFound.render()
                     notFoundWrapper.classList.remove('hidden')
                 }else{
-                    console.log('pas zero')
+                    
                     // ici on instancie seulement appliance et unstensils
                     const appliance = new Appliance(filteredList)
                     appliance.render()
