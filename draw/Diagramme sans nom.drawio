@@ -1,15 +1,9 @@
-<mxfile host="app.diagrams.net" modified="2022-12-23T22:56:08.245Z" agent="5.0 (Windows)" version="20.7.4" etag="nc-S3n6Ynm1tz7xInmI6" type="github">
+<mxfile host="app.diagrams.net" modified="2022-12-23T23:23:41.977Z" agent="5.0 (Windows)" etag="lEGZQXvTIXWjgc6_2oDc" version="20.7.4" type="github">
   <diagram id="ULDBY66KBe7qfKJZnPiM" name="Page-1">
-    <mxGraphModel dx="1050" dy="1727" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1050" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="w6g4SxeamJW3JEsDFvqP-1" value="&#xa;&lt;div align=&quot;left&quot;&gt;&lt;b&gt;&lt;font style=&quot;font-size: 24px;&quot; size=&quot;3&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Annexe fiche d&#39;investigation :&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Diagramme méthode &quot;for of&quot; à l&#39;intérieur d&#39;une boucle &quot;for&quot;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&#xa;&#xa;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry y="-15" width="530" height="110" as="geometry" />
-        </mxCell>
-        <mxCell id="w6g4SxeamJW3JEsDFvqP-2" value="Text" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="90" y="95" width="40" height="30" as="geometry" />
-        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
