@@ -75,6 +75,7 @@ export default class Search{
                     }
                 })
                 console.log("filteredList: ", filteredList)
+                console.log('recipes: ', recipes)
                 // si la liste est vide
                 if(filteredList.length === 0){
                     const notFound = new NotFound()

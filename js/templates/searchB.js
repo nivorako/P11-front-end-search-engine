@@ -29,38 +29,38 @@ export default class Search{
             if(inputValue.length >= 3){
                 // à commenter por js B
                 cards.innerHTML = ""
-               
-                recipes.forEach(recipe => {
-                    
-                    for(const [key, value ] of Object.entries(recipe)){
+
+                const length = recipes.length
+
+                for (let i=0 ; i<length; i++){
+                    for(const [key, value ] of Object.entries(recipes[i])){
                         if(`${key}` === "appliance" && removeAccents(`${value}`.toLowerCase().trim()) ===  removeAccents(inputValue.toLowerCase().trim())){
-                            selectedList.push(recipe)
+                            selectedList.push(recipes[i])
                             console.log('appliance: ', `${value}`)
                         }
 
                         if(`${key}` === "ustensils" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                            selectedList.push(recipe)
+                            selectedList.push(recipes[i])
                             console.log('ustensils: ', selectedList)
                         }
 
                         if(`${key}` === "name" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                            selectedList.push(recipe)
+                            selectedList.push(recipes[i])
                         }
                         if(`${key}` === "ingredients"){
-                            for(const elt of recipe.ingredients)
+                            for(const elt of recipes[i].ingredients)
                             if(removeAccents(elt.ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                                selectedList.push(recipe)
+                                selectedList.push(recipes[i])
                                 console.log("ingredient: ", selectedList)
                             }
                         }
                         if(`${key}` === "description" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                            selectedList.push(recipe)
+                            selectedList.push(recipes[i])
                             console.log("description: ", selectedList)
                         }
                     }
-      
-                }) 
-                
+                }
+
                 // éviter doublons dans selectedList
                 const filteredList  = []
                 const selectedListLength = selectedList.length
