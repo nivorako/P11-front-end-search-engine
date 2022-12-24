@@ -36,12 +36,10 @@ export default class Search{
                     for(const [key, value ] of Object.entries(recipes[i])){
                         if(`${key}` === "appliance" && removeAccents(`${value}`.toLowerCase().trim()) ===  removeAccents(inputValue.toLowerCase().trim())){
                             selectedList.push(recipes[i])
-                            console.log('appliance: ', `${value}`)
                         }
 
                         if(`${key}` === "ustensils" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             selectedList.push(recipes[i])
-                            console.log('ustensils: ', selectedList)
                         }
 
                         if(`${key}` === "name" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
@@ -51,12 +49,10 @@ export default class Search{
                             for(const elt of recipes[i].ingredients)
                             if(removeAccents(elt.ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                                 selectedList.push(recipes[i])
-                                console.log("ingredient: ", selectedList)
                             }
                         }
                         if(`${key}` === "description" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             selectedList.push(recipes[i])
-                            console.log("description: ", selectedList)
                         }
                     }
                 }
