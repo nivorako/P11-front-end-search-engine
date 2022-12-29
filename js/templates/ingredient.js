@@ -5,7 +5,7 @@ import NotFound from "./notFound.js"
 import Ustensils from "./ustensils.js"
 import Appliance from "./appliance.js"
 import { removeAccents } from "../utilities/removeAccent.js"
-import ListItems from "./listItems.js"
+import IngredientListItem from "./ingredientListItem.js"
 
 export default class Ingredient{
     constructor(recipes){
@@ -340,7 +340,7 @@ export default class Ingredient{
                     notFound.render()
                     notFoundWrapper.classList.remove('hidden')
                 }else{
-                    const listIngredient = new ListItems(filteredList)
+                    const listIngredient = new IngredientListItem(filteredList)
                     listIngredient.render()
 
                     // ici on instancie seulement appliance et unstensils
@@ -361,7 +361,7 @@ export default class Ingredient{
             }else{
                 notFoundWrapper.classList.add('hidden')
                 cards.innerHTML = ""
-                const newListIngredient = new ListItems(recipes)
+                const newListIngredient = new IngredientListItem(recipes)
                 newListIngredient.render()
 
                 const appliance = new Appliance(recipes)

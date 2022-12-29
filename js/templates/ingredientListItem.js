@@ -7,7 +7,7 @@ import Api from "../api/api.js"
 import NotFound from "./notFound.js"
 import Card from "./card.js"
 
-export default class ListItems{
+export default class IngredientListItem{
     constructor(recipes){
         this.wrapper = document.querySelector('.ingredientTag__listItems')
         this.recipes = recipes
@@ -48,6 +48,7 @@ export default class ListItems{
         })
         return listHTML
     }
+
 
     async listOnclick(){
         const totalRecipes = await this.recipesApi.get();
@@ -232,8 +233,8 @@ export default class ListItems{
     }
    
     render(){
-       const list = this.listItemIngredient()
-       this.wrapper.innerHTML = list
-       this.listOnclick()
+        const list = this.listItemIngredient()
+        this.wrapper.innerHTML = list
+        this.listOnclick()
     }
 }

@@ -34,13 +34,13 @@ export default class Search{
 
                 for (let i=0 ; i<length; i++){
                     for(const [key, value ] of Object.entries(recipes[i])){
-                        if(`${key}` === "appliance" && removeAccents(`${value}`.toLowerCase().trim()) ===  removeAccents(inputValue.toLowerCase().trim())){
-                            selectedList.push(recipes[i])
-                        }
+                        // if(`${key}` === "appliance" && removeAccents(`${value}`.toLowerCase().trim()) ===  removeAccents(inputValue.toLowerCase().trim())){
+                        //     selectedList.push(recipes[i])
+                        // }
 
-                        if(`${key}` === "ustensils" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                            selectedList.push(recipes[i])
-                        }
+                        // if(`${key}` === "ustensils" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                        //     selectedList.push(recipes[i])
+                        // }
 
                         if(`${key}` === "name" && removeAccents(`${value}`.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             selectedList.push(recipes[i])
