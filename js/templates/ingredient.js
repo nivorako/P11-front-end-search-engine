@@ -97,7 +97,7 @@ export default class Ingredient{
                     tagItems.appendChild(tagTemplate)
                     // vider le contenu text de ingredientTagList
                     ingredientTagList.innerHTML = ""
-                    
+                    console.log('this recipes: ', this.recipes)
                      // selectionner recipes selon text
                     this.recipes.forEach(recipe => {   
                         recipe.ingredients.forEach(ingredient => {
@@ -105,10 +105,10 @@ export default class Ingredient{
                             selectedRecipe.push(recipe)
                         })                    
                     })
+                    console.log('selected :', selectedRecipe)
                     // si selectedRecipe n'est pas vide
                     if(selectedRecipe.length > 0 ){
-                        // affecter selectedRecipe à this.recipe
-                        this.recipes = selectedRecipe
+                        
                         // instancier new Appliance()
                         const appliance = new Appliance(selectedRecipe)
                         appliance.render()
@@ -146,14 +146,14 @@ export default class Ingredient{
                         tagItem.remove()
                         // remettre le texte dans la liste
                         ingredientTagList.innerHTML = tagItem.textContent
-
+                        console.log('this recipes: ', this.recipes)
                         // // renouveler list dans card                   
                         // récupérer le reste de tag.textContent et refaire la liste à partir de 
                         // si il ne reste que un seul enfant de tagItems
                         if(tagItems.childNodes.length == 0){
                             cardWrapper.innerHTML = ""
-                            // console.log('recipe de secours: ', totalRecipes)
-                            totalRecipes.forEach(recipe => {
+                            // on donne les recettes initiales
+                            this.recipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
                                 let newCardTemplate = newCard.render()
                                 cardWrapper.appendChild(newCardTemplate)
@@ -301,22 +301,6 @@ export default class Ingredient{
                 <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
             `;
         })
-       
-        // if(arrayTag[0]){
-        // ingredientTab.sort().forEach(ingredient => {
-            
-        //     listHTML += `
-        //         <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
-        //     `;
-        // })
-        // }else{
-        // ingredientTab.sort().forEach(ingredient => {
-            
-        //     listHTML += `
-        //         <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
-        //     `;
-        // })
-        // }
     
         return listHTML;
     }

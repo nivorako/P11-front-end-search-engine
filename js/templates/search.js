@@ -31,12 +31,7 @@ export default class Search{
                 cards.innerHTML = ""
 
                 recipes.map(recipe => {
-                    // if(recipe.appliance){
-            
-                    //     if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
-                    //     selectedList.push(recipe)
-                        
-                    // } 
+                  
                     if(recipe.ingredients){
                         const ingredientLength = recipe.ingredients.length
                         for(let i=0; i<ingredientLength; i++){
@@ -45,14 +40,7 @@ export default class Search{
                             selectedList.push(recipe)                           
                         }
                     }
-                    // if(recipe.ustensils){
-                    //     const ustensilLength = recipe.ustensils.length
-                    //     for(let j=0; j<ustensilLength; j++){
-                    //         if(removeAccents(recipe.ustensils[j].toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                    //             selectedList.push(recipe)
-                    //         }
-                    //     }
-                    // }
+                   
                     if(recipe.name){
                         if(removeAccents(recipe.name.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
                             selectedList.push(recipe)                            
