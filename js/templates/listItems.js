@@ -1,69 +1,52 @@
-import Api from "../api/api.js"
-import Tag from "./tag.js"
-import Card from "./card.js"
-import NotFound from "./notFound.js"
-import Ustensils from "./ustensils.js"
-import Appliance from "./appliance.js"
 import { removeAccents } from "../utilities/removeAccent.js"
-import ListItems from "./listItems.js"
+import Tag from "./tag.js"
+import Appliance from "./appliance.js"
+import Ingredient from "./ingredient.js"
+import Ustensils from "./ustensils.js"
+import Api from "../api/api.js"
+import NotFound from "./notFound.js"
+import Card from "./card.js"
 
-export default class Ingredient{
+export default class ListItems{
     constructor(recipes){
-        this.ingredientWrapper = document.querySelector('.tag__ingredients')
-        this.recipesApi = new Api("./data/recipes.json");
+        this.wrapper = document.querySelector('.ingredientTag__listItems')
         this.recipes = recipes
-        
+        this.recipesApi = new Api("./data/recipes.json");
     }
-
-    ingredientOnClick(){
-        const ingredientTagClose = document.querySelector(".ingredientTag__close")
-        ingredientTagClose.addEventListener('click', (e) => {
-            if(ingredientTagClose.classList.contains('fa-chevron-up')){
-                this.closeTag()
-            }else{
-                this.openTag()
+    
+    listItemIngredient(){
+        const ingredientTagInput = document.querySelector('.ingredientTag__input')
+        let listHTML = ""
+        let ingredientTab = []
+        this.recipes.forEach(recipe => {
+            // pour chaque recipe
+            const length = Object.entries(recipe).length
+            for(let i= 0; i < length; i++){
+                // si Object.keys(recipe)[i] est ingredients
+                if((Object.keys(recipe)[i] === "ingredients") ){
+                    // pour chaque ingredient
+                    const ingredientLength = Object.values(recipe)[i].length
+                    for(let j = 0; j < ingredientLength; j++){
+                        
+                        // si ingredientTab ne contient pas ingredient ET ingredient include inputValue
+                        if(
+                            (!ingredientTab.includes(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase())))
+                             && (removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()).includes(removeAccents(ingredientTagInput.value)))
+                        ){
+                            ingredientTab.push(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))
+                        }
+                    }
+                }
             }
         })
-
-        document.addEventListener('click', (e) => {
-            if(!e.target.closest(".tag__ingredients")){
-                this.closeTag()
-            }
+    
+        ingredientTab.sort().forEach(ingredient => {
+               
+            listHTML += `
+                <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
+            `;
         })
-    }
-
-    openTag(){
-        const ingredientTagTitle = document.querySelector('.ingredientTag__title')
-        const ingredientTagInput = document.querySelector('.ingredientTag__input')
-        const ingredientTagList = document.querySelector('.ingredientTag__list')
-        const ingredientTagclose = document.querySelector('.ingredientTag__close')
-        
-        this.ingredientWrapper.classList.remove("col-2")
-        this.ingredientWrapper.classList.add('col-6')
-
-        ingredientTagTitle.classList.add('hidden')
-        ingredientTagInput.classList.remove('hidden')
-        ingredientTagList.classList.remove('hidden')  
-
-        ingredientTagclose.classList.remove('fa-chevron-down')
-        ingredientTagclose.classList.add('fa-chevron-up')
-    }
-
-    closeTag(){
-        const ingredientTagTitle = document.querySelector('.ingredientTag__title')
-        const ingredientTagInput = document.querySelector('.ingredientTag__input')
-        const ingredientTagList = document.querySelector('.ingredientTag__list')
-        const ingredientTagclose = document.querySelector('.ingredientTag__close')
-        
-        this.ingredientWrapper.classList.add("col-2")
-        this.ingredientWrapper.classList.remove('col-6')
-
-        ingredientTagTitle.classList.remove('hidden')
-        ingredientTagInput.classList.add('hidden')
-        ingredientTagList.classList.add('hidden')  
-
-        ingredientTagclose.classList.add('fa-chevron-down')
-        ingredientTagclose.classList.remove('fa-chevron-up')
+        return listHTML
     }
 
     async listOnclick(){
@@ -247,171 +230,10 @@ export default class Ingredient{
         })
         
     }
-
-    selectRecipe(array){
-        let foundRecipes = []
-        if(array.length === 3){
-            const tab = array[0].filter(elt => array[1].indexOf(elt) !== -1)
-            foundRecipes = array[2].filter(elt => tab.indexOf(elt) !== -1)
-            
-        }else if(array.length === 2){
-            foundRecipes = array[0].filter(elt => array[1].indexOf(elt) !== -1)
-        }else{
-            foundRecipes = array[0]
-        }
-         
-        return foundRecipes
-    }
-
-    //parametre liste mise a jour
-    listItems(){
-        // const tagItems = document.querySelector('.tag__items')
-        // // tab pour futur liste des currents tags
-        // let arrayTag = []
-        // // mettre dedans chaque texte de tagItems.childNodes
-        // Array.from(tagItems.childNodes).forEach(node => {
-        //     arrayTag.push(node.innerText)
-        // })
-        
-        let listHTML = ""
-        let ingredientTab = []
-
-        this.recipes.forEach(recipe => {
-            // pour chaque recipe
-            const length = Object.entries(recipe).length
-            for(let i= 0; i < length; i++){
-                // si Object.keys(recipe)[i] est ingredients
-                if((Object.keys(recipe)[i] === "ingredients") ){
-                    // pour chaque ingredient
-                    const ingredientLength = Object.values(recipe)[i].length
-                    for(let j = 0; j < ingredientLength; j++){
-                        
-                        // si ingredientTab ne contient pas ingredient
-                        if(!ingredientTab.includes(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))){
-                            ingredientTab.push(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))
-                        }
-                    }
-                }
-            }
-        })
-
-        ingredientTab.sort().forEach(ingredient => {
-               
-            listHTML += `
-                <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
-            `;
-        })
-       
-        // if(arrayTag[0]){
-        // ingredientTab.sort().forEach(ingredient => {
-            
-        //     listHTML += `
-        //         <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
-        //     `;
-        // })
-        // }else{
-        // ingredientTab.sort().forEach(ingredient => {
-            
-        //     listHTML += `
-        //         <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
-        //     `;
-        // })
-        // }
-    
-        return listHTML;
-    }
-
-    searchIngredient(recipes){
-        const ingredientTagInput = document.querySelector('.ingredientTag__input')
-        const cards = document.querySelector('.cards')
-        const notFoundWrapper = document.querySelector('.notFound')
-        ingredientTagInput.addEventListener('keyup', (e) => {
-            let inputValue = e.target.value
-            let selectedList = []
-            console.log('inputValue: ', inputValue.length)
-            if(inputValue.length > 2){
-                for(const recipe of recipes){   
-                    if(recipe.ingredients){
-                        const ingredientLength = recipe.ingredients.length
-                        for(let i=0; i<ingredientLength; i++){
-                            
-                            if(removeAccents(recipe.ingredients[i].ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim())))
-                            selectedList.push(recipe)
-                        }
-                    } 
-                }
-                console.log('selected: ici', selectedList)
-                // éviter doublons dans selectedList
-                const filteredList  = []
-                selectedList.forEach(list => {
-                    if(!filteredList.includes(list)){
-                        filteredList.push(list)
-                    }
-                })
-                console.log('filterde: ', filteredList)
-                if(filteredList.length === 0){
-                    console.log('zero')
-                    cards.innerHTML = ""
-                    const notFound = new NotFound()
-                    notFound.render()
-                    notFoundWrapper.classList.remove('hidden')
-                }else{
-                    const listIngredient = new ListItems(filteredList)
-                    listIngredient.render()
-
-                    // ici on instancie seulement appliance et unstensils
-                    const appliance = new Appliance(filteredList)
-                    appliance.render()
-                    const ustensil = new Ustensils(filteredList)
-                    ustensil.render()
-                    // supprimer la page not found
-                    notFoundWrapper.classList.add('hidden')
-                    cards.innerHTML = ""
-                    // donner chaque list de selectedList à newcard pour afficher dans cards
-                    recipes.forEach(selected => {
-                        const newCard = new Card(selected)
-                        const newCardTemplate = newCard.render()
-                        cards.appendChild(newCardTemplate)
-                    })
-                }
-            }else{
-                notFoundWrapper.classList.add('hidden')
-                cards.innerHTML = ""
-                const newListIngredient = new ListItems(recipes)
-                newListIngredient.render()
-
-                const appliance = new Appliance(recipes)
-                appliance.render()
-                const ustensil = new Ustensils(recipes)
-                ustensil.render()
-                recipes.forEach(recipe => { 
-                    const card = new Card(recipe)
-                    const template = card.render()
-                    
-                    cards.appendChild(template)
-                })
-            }
-        })
-    }
-
+   
     render(){
-        const ingredientTag = /*html*/ `
-            <div class="ingredientTag__btn  bg-primary" > 
-                <h2 class="ingredientTag__title text-center">Ingredients</h2>
-                <input class="ingredientTag__input hidden" type="text" placeholder="rechercher un ingredient"> 
-                <i class="fas fa-chevron-down ingredientTag__close"></i> 
-            </div>
-            <div class="ingredientTag__list hidden bg-primary p-3">        
-                <ul class="ingredientTag__listItems row bg-primary">
-                    ${this.listItems()}
-                </ul> 
-            </div> 
-            `;
-
-        this.ingredientWrapper.innerHTML = ingredientTag;
-        this.searchIngredient(this.recipes);
-        this.ingredientOnClick();
-        this.listOnclick();
-        return this.ingredientWrapper;
+       const list = this.listItemIngredient()
+       this.wrapper.innerHTML = list
+       this.listOnclick()
     }
 }

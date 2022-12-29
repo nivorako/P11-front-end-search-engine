@@ -297,7 +297,7 @@ export default class Appliance{
         applianceTagInput.addEventListener('keyup', (e) => {
             let inputValue = e.target.value
             let selectedList = []
-            console.log('inputValue: ', inputValue.length)
+            console.log('inputValue length: ', inputValue.length)
             if(inputValue.length > 2){
                 for(const recipe of recipes){   
                     if(recipe.appliance){

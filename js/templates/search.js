@@ -31,41 +31,39 @@ export default class Search{
                 cards.innerHTML = ""
 
                 recipes.map(recipe => {
-                    if(recipe.appliance){
+                    // if(recipe.appliance){
             
-                        if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
-                        selectedList.push(recipe)
+                    //     if(removeAccents(recipe.appliance.toLowerCase()).trim().includes(removeAccents(inputValue.toLowerCase().trim())))
+                    //     selectedList.push(recipe)
                         
-                    } 
+                    // } 
                     if(recipe.ingredients){
                         const ingredientLength = recipe.ingredients.length
                         for(let i=0; i<ingredientLength; i++){
                             
                             if(removeAccents(recipe.ingredients[i].ingredient.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim())))
-                            selectedList.push(recipe)
+                            selectedList.push(recipe)                           
                         }
                     }
-                    if(recipe.ustensils){
-                        const ustensilLength = recipe.ustensils.length
-                        for(let j=0; j<ustensilLength; j++){
-                            if(removeAccents(recipe.ustensils[j].toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                                selectedList.push(recipe)
-                            }
-                        }
-                    }
+                    // if(recipe.ustensils){
+                    //     const ustensilLength = recipe.ustensils.length
+                    //     for(let j=0; j<ustensilLength; j++){
+                    //         if(removeAccents(recipe.ustensils[j].toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
+                    //             selectedList.push(recipe)
+                    //         }
+                    //     }
+                    // }
                     if(recipe.name){
                         if(removeAccents(recipe.name.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                            selectedList.push(recipe)
+                            selectedList.push(recipe)                            
                         }
                     }
                     if(recipe.description){
                         if(removeAccents(recipe.description.toLowerCase().trim()).includes(removeAccents(inputValue.toLowerCase().trim()))){
-                            //console.log('description: ', recipe.description)
                             selectedList.push(recipe)
                         }
                     }          
                 })
-                
                 
                 // éviter doublons dans selectedList
                 const filteredList  = []
@@ -74,8 +72,7 @@ export default class Search{
                         filteredList.push(list)
                     }
                 })
-                console.log("filteredList: ", filteredList)
-                console.log('recipes: ', recipes)
+                console.log('filtered: ', filteredList)
                 // si la liste est vide
                 if(filteredList.length === 0){
                     const notFound = new NotFound()
