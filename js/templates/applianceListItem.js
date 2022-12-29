@@ -13,41 +13,6 @@ export default class ApplianceListItem{
         this.recipes = recipes
         this.recipesApi = new Api("./data/recipes.json");
     }
-    
-    listItemIngredient(){
-        const ingredientTagInput = document.querySelector('.ingredientTag__input')
-        let listHTML = ""
-        let ingredientTab = []
-        this.recipes.forEach(recipe => {
-            // pour chaque recipe
-            const length = Object.entries(recipe).length
-            for(let i= 0; i < length; i++){
-                // si Object.keys(recipe)[i] est ingredients
-                if((Object.keys(recipe)[i] === "ingredients") ){
-                    // pour chaque ingredient
-                    const ingredientLength = Object.values(recipe)[i].length
-                    for(let j = 0; j < ingredientLength; j++){
-                        
-                        // si ingredientTab ne contient pas ingredient ET ingredient include inputValue
-                        if(
-                            (!ingredientTab.includes(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase())))
-                             && (removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()).includes(removeAccents(ingredientTagInput.value)))
-                        ){
-                            ingredientTab.push(removeAccents(Object.values(recipe)[i][j].ingredient.toLowerCase()))
-                        }
-                    }
-                }
-            }
-        })
-    
-        ingredientTab.sort().forEach(ingredient => {
-               
-            listHTML += `
-                <li class="ingredientTag__listItem col-4"> ${ingredient[0].toUpperCase() + ingredient.slice(1)} </li>  
-            `;
-        })
-        return listHTML
-    }
 
     listItemAppliance(){
         const applianceTagInput = document.querySelector(".applianceTag__input")

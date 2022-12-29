@@ -5,6 +5,7 @@ import Appliance from "./appliance.js";
 import NotFound from "./notFound.js";
 import Api from "../api/api.js";
 import { removeAccents } from "../utilities/removeAccent.js";
+import UstensilsListItem from "./ustensilsListItem.js";
 
 export default class Ustensils {
     constructor(recipes){
@@ -94,7 +95,7 @@ export default class Ustensils {
                     tagItems.appendChild(tagTemplate)
                     // supprimer le content de la liste dans ustensilTag__listItem
                     ustensilTagList.textContent = ""
-
+                    console.log('this recipes: ', this.recipes)
                     // selectionner recipes selon text
                     this.recipes.forEach(recipe => {
                         recipe.ustensils.forEach(ustensil => {
@@ -103,10 +104,11 @@ export default class Ustensils {
                             }
                         })                       
                     })
+                    console.log('selectedRecipe: ', selectedRecipe)
                     // si selectedRecipe n'est pas vide
                     if(selectedRecipe.length > 0){
                         // affecter selectedRecipe à this.recipe
-                        this.recipes = selectedRecipe
+                        // this.recipes = selectedRecipe
                         // instancier new Ingredient()
                         const ingredient = new Ingredient(selectedRecipe)
                         ingredient.render()
@@ -120,7 +122,7 @@ export default class Ustensils {
                         cardWrapper.innerHTML = ""
 
                         // afficher newCard selon selectedRecipe
-                        this.recipes.forEach(recipe => {
+                        selectedRecipe.forEach(recipe => {
                             let newCard = new Card(recipe)
                             let newCardTemplate = newCard.render()
                             cardWrapper.appendChild(newCardTemplate)
@@ -151,7 +153,7 @@ export default class Ustensils {
                         if(tagItems.childNodes.length == 0){
                             cardWrapper.innerHTML = ""
                             // console.log('recipe de secours: ', totalRecipes)
-                            totalRecipes.forEach(recipe => {
+                            this.recipes.forEach(recipe => {
                                 let newCard = new Card(recipe)
                                 let newCardTemplate = newCard.render()
                                 cardWrapper.appendChild(newCardTemplate)
@@ -321,6 +323,8 @@ export default class Ustensils {
                     notFoundWrapper.classList.remove('hidden')
                 }else{
                     console.log('pas zero')
+                    const listUstensils = new UstensilsListItem(filteredList)
+                    listUstensils.render()
                     // ici on instancie seulement appliance et unstensils
                     const appliance = new Appliance(filteredList)
                     appliance.render()
@@ -330,7 +334,7 @@ export default class Ustensils {
                     notFoundWrapper.classList.add('hidden')
                     cards.innerHTML = ""
                     // donner chaque list de selectedList à newcard pour afficher dans cards
-                    filteredList.forEach(selected => {
+                    recipes.forEach(selected => {
                         const newCard = new Card(selected)
                         const newCardTemplate = newCard.render()
                         cards.appendChild(newCardTemplate)
@@ -339,7 +343,8 @@ export default class Ustensils {
             }else{
                 notFoundWrapper.classList.add('hidden')
                 cards.innerHTML = ""
-
+                const newListUstensils = new UstensilsListItem(recipes)
+                newListUstensils.render()
                 const appliance = new Appliance(recipes)
                 appliance.render()
                 const ingredient = new Ingredient(recipes)
